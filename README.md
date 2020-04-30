@@ -1,4 +1,4 @@
-[![](https://jitpack.io/v/umjammer/java-unrar.svg)](https://jitpack.io/#umjammer/java-unrar)
+[![](https://jitpack.io/v/umjammer/java-unrar.svg)](https://jitpack.io/#umjammer/java-unrar) [![Parent](https://img.shields.io/badge/Parent-vavi--util--archive-pink)](https://github.com/umjammer/vavi-util-archive)
 
 # java-unrar
 
