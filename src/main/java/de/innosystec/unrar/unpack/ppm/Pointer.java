@@ -21,7 +21,7 @@ package de.innosystec.unrar.unpack.ppm;
 /**
  * Simulates Pointers on a single mem block as a byte[]
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public abstract class Pointer {

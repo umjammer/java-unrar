@@ -21,7 +21,7 @@ package de.innosystec.unrar.unpack.vm;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public class VMCmdFlags {

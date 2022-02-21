@@ -13,6 +13,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownServiceException;
+import java.util.logging.Logger;
 
 import de.innosystec.unrar.Archive;
 import de.innosystec.unrar.exception.RarException;
@@ -23,6 +24,8 @@ import de.innosystec.unrar.rarfile.FileHeader;
  * @author Luca Santarelli luca.santarelli@gmail.com
  */
 public class RarURLConnection extends URLConnection {
+
+    private static final Logger logger = Logger.getLogger(RarURLConnection.class.getName());
 
     /**
      * Will contain file data after a successful connection.
@@ -53,7 +56,7 @@ public class RarURLConnection extends URLConnection {
 
     @Override
     public void connect() throws IOException {
-        // System.out.println("Requested to connect; url is " + url);
+logger.fine("Requested to connect; url is " + url);
 
         try {
             File rarFile;
@@ -67,9 +70,8 @@ public class RarURLConnection extends URLConnection {
                 throw new FileNotFoundException("File not found: " + rarFile.toURI());
             }
 
-            /* The following line raises a RarException if the file is not a
-             * true rar
-             * file. */
+            // The following line raises a RarException if the file is not a
+            // true rar file.
             Archive rarArchive = new Archive(rarFile);
             if (entry == null) {
                 contentLength = (int) rarFile.length();
@@ -79,7 +81,8 @@ public class RarURLConnection extends URLConnection {
                 FileHeader fileHeader = null;
                 while ((fileHeader = rarArchive.nextFileHeader()) != null) {
                     if (!fileHeader.isDirectory()) {
-                        if (fileHeader.getFileNameString().compareTo(entry) == 0) {
+logger.fine(fileHeader.getFileNameString() + ", " + entry);
+                        if (fileHeader.getFileNameString().replace('\\', '/').compareTo(entry) == 0) {
                             ByteArrayOutputStream baos = new ByteArrayOutputStream();
                             rarArchive.extractFile(fileHeader, baos);
                             baos.flush();

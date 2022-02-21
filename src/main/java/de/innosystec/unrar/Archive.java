@@ -1,20 +1,9 @@
 /*
  * Copyright (c) 2007 innoSysTec (R) GmbH, Germany. All rights reserved.
- * Original author: Edmund Wagner
- * Creation date: 22.05.2007
- *
- * Source: $HeadURL$
- * Last changed: $LastChangedDate$
  *
  * the unrar licence applies to all junrar source and binary distributions
  * you are not allowed to use this source to re-create the RAR compression
  * algorithm
- *
- * Here some html entities which can be used for escaping javadoc tags:
- * "&":  "&#038;" or "&amp;"
- * "<":  "&#060;" or "&lt;"
- * ">":  "&#062;" or "&gt;"
- * "@":  "&#064;"
  */
 
 package de.innosystec.unrar;
@@ -54,8 +43,8 @@ import de.innosystec.unrar.unpack.Unpack;
 /**
  * The Main Rar Class; represents a rar Archive
  *
- * @author $LastChangedBy$
- * @version $LastChangedRevision$
+ * @author Edmund Wagner
+ * @version 22.05.2007
  */
 public class Archive implements Closeable {
 
@@ -223,7 +212,7 @@ public class Archive implements Closeable {
                 break;
             }
 
-//            logger.info("\n--------reading header--------");
+            logger.fine("\n--------reading header--------");
             size = rof.readFully(baseBlockBuffer, BaseBlock.BaseBlockSize);
             if (size == 0) {
                 break;
@@ -240,7 +229,7 @@ public class Archive implements Closeable {
                     throw new RarException(RarException.RarExceptionType.badRarArchive);
                 }
                 headers.add(markHead);
-//                markHead.print();
+                markHead.print();
                 break;
 
             case MainHeader:
@@ -255,7 +244,7 @@ public class Archive implements Closeable {
                 if (newMhd.isEncrypted()) {
                     throw new RarException(RarExceptionType.rarEncryptedException);
                 }
-//                mainhead.print();
+                mainhead.print();
                 break;
 
             case SignHeader:
@@ -266,7 +255,7 @@ public class Archive implements Closeable {
                 signHeaderSize = rof.readFully(signBuff, toRead);
                 SignHeader signHead = new SignHeader(block, signBuff);
                 headers.add(signHead);
-//                logger.info("HeaderType: SignHeader");
+                logger.fine("HeaderType: SignHeader");
 
                 break;
 
@@ -278,7 +267,7 @@ public class Archive implements Closeable {
                 avHeaderSize = rof.readFully(avBuff, toRead);
                 AVHeader avHead = new AVHeader(block, avBuff);
                 headers.add(avHead);
-//                logger.info("headertype: AVHeader");
+                logger.fine("headertype: AVHeader");
                 break;
 
             case CommHeader:
@@ -289,7 +278,7 @@ public class Archive implements Closeable {
                 commHeaderSize = rof.readFully(commBuff, toRead);
                 CommentHeader commHead = new CommentHeader(block, commBuff);
                 headers.add(commHead);
-//                logger.info("method: " + commHead.getUnpMethod() + "; 0x" + Integer.toHexString(commHead.getUnpMethod()));
+                logger.fine("method: " + commHead.getUnpMethod() + "; 0x" + Integer.toHexString(commHead.getUnpMethod()));
                 newpos = commHead.getPositionInFile() + commHead.getHeaderSize();
                 rof.setPosition(newpos);
 
@@ -310,14 +299,14 @@ public class Archive implements Closeable {
                     byte[] endArchBuff = new byte[toRead];
                     endArcHeaderSize = rof.readFully(endArchBuff, toRead);
                     endArcHead = new EndArcHeader(block, endArchBuff);
-//                    logger.info("HeaderType: endarch\ndatacrc:" + endArcHead.getArchiveDataCRC());
+                    logger.fine("HeaderType: endarch\ndatacrc:" + endArcHead.getArchiveDataCRC());
                 } else {
-//                    logger.info("HeaderType: endarch - no Data");
+                    logger.fine("HeaderType: endarch - no Data");
                     endArcHead = new EndArcHeader(block, null);
                 }
                 headers.add(endArcHead);
                 this.endHeader = endArcHead;
-//                logger.info("\n--------end header--------");
+                logger.fine("\n--------end header--------");
                 return;
 
             default:
@@ -350,7 +339,7 @@ public class Archive implements Closeable {
                     int phsize = rof.readFully(protectHeaderBuffer, toRead);
                     ProtectHeader ph = new ProtectHeader(blockHead, protectHeaderBuffer);
 
-//                    logger.info("totalblocks"+ph.getTotalBlocks());
+//                    logger.fine("totalblocks"+ph.getTotalBlocks());
                     newpos = ph.getPositionInFile() + ph.getHeaderSize();
                     rof.setPosition(newpos);
                     break;
@@ -413,7 +402,7 @@ public class Archive implements Closeable {
 
                 }
             }
-//            logger.info("\n--------end header--------");
+//            logger.fine("\n--------end header--------");
         }
     }
 

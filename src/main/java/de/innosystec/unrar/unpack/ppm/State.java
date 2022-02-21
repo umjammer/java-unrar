@@ -24,7 +24,7 @@ import de.innosystec.unrar.io.Raw;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public class State extends Pointer {

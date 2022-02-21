@@ -1,19 +1,8 @@
 /*
  * Copyright (c) 2007 innoSysTec (R) GmbH, Germany. All rights reserved.
- * Original author: Edmund Wagner
- * Creation date: 18.06.2007
- *
- * Source: $HeadURL$
- * Last changed: $LastChangedDate$
  *
  * the unrar licence applies to all junrar source and binary distributions
  * you are not allowed to use this source to re-create the RAR compression algorithm
- *
- * Here some html entities which can be used for escaping javadoc tags:
- * "&":  "&#038;" or "&amp;"
- * "<":  "&#060;" or "&lt;"
- * ">":  "&#062;" or "&gt;"
- * "@":  "&#064;"
  */
 
 package de.innosystec.unrar.io;
@@ -21,8 +10,8 @@ package de.innosystec.unrar.io;
 /**
  * Read / write numbers to a byte[] regarding the endianness of the array
  *
- * @author $LastChangedBy$
- * @version $LastChangedRevision$
+ * @author Edmund Wagner
+ * @version 18.06.2007
  */
 public class Raw {
     /**
@@ -104,9 +93,9 @@ public class Raw {
      */
     public static final short readShortLittleEndian(byte[] array, int pos) {
         short result = 0;
-        result += array[pos + 1] & 0xff;
+        result += (short) (array[pos + 1] & 0xff);
         result <<= 8;
-        result += array[pos] & 0xff;
+        result += (short) (array[pos] & 0xff);
         return result;
     }
 

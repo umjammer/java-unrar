@@ -1,14 +1,13 @@
 
 package de.innosystec.unrar.rarfile;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
 
 import de.innosystec.unrar.io.Raw;
 
 
 public class UnixOwnersHeader extends SubBlockHeader {
-    private Log logger = LogFactory.getLog(UnixOwnersHeader.class);
+    private static final Logger logger = Logger.getLogger(UnixOwnersHeader.class.getName());
 
     private int ownerNameSize;
 
@@ -94,13 +93,12 @@ public class UnixOwnersHeader extends SubBlockHeader {
         this.ownerNameSize = ownerNameSize;
     }
 
-    /* (non-Javadoc)
-     * @see de.innosystec.unrar.rarfile.SubBlockHeader#print() */
+    /* @see de.innosystec.unrar.rarfile.SubBlockHeader#print() */
     public void print() {
         super.print();
-        logger.info("ownerNameSize: " + ownerNameSize);
-        logger.info("owner: " + owner);
-        logger.info("groupNameSize: " + groupNameSize);
-        logger.info("group: " + group);
+        logger.fine("ownerNameSize: " + ownerNameSize);
+        logger.fine("owner: " + owner);
+        logger.fine("groupNameSize: " + groupNameSize);
+        logger.fine("group: " + group);
     }
 }

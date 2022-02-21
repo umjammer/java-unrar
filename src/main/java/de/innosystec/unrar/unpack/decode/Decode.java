@@ -21,7 +21,7 @@ package de.innosystec.unrar.unpack.decode;
 /**
  * Used to store information for lz decoding
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public class Decode {

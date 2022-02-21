@@ -26,7 +26,7 @@ import java.util.Vector;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public class VMPreparedProgram {

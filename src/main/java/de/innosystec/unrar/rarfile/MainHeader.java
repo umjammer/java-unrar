@@ -1,26 +1,13 @@
 /*
  * Copyright (c) 2007 innoSysTec (R) GmbH, Germany. All rights reserved.
- * Original author: Edmund Wagner
- * Creation date: 22.05.2007
- *
- * Source: $HeadURL$
- * Last changed: $LastChangedDate$
- *
  *
  * the unrar licence applies to all junrar source and binary distributions
  * you are not allowed to use this source to re-create the RAR compression algorithm
- *
- * Here some html entities which can be used for escaping javadoc tags:
- * "&":  "&#038;" or "&amp;"
- * "<":  "&#060;" or "&lt;"
- * ">":  "&#062;" or "&gt;"
- * "@":  "&#064;"
  */
 
 package de.innosystec.unrar.rarfile;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
 
 import de.innosystec.unrar.io.Raw;
 
@@ -29,12 +16,11 @@ import de.innosystec.unrar.io.Raw;
  * The main header of an rar archive. holds information concerning the whole
  * archive (solid, encrypted etc).
  *
- * @author $LastChangedBy$
- * @version $LastChangedRevision$
+ * @author Edmund Wagner
+ * @version 22.05.2007
  */
 public class MainHeader extends BaseBlock {
-    @SuppressWarnings("hiding")
-    private Log logger = LogFactory.getLog(MainHeader.class.getName());
+    private Logger logger = Logger.getLogger(MainHeader.class.getName());
 
     public static final short mainHeaderSizeWithEnc = 7;
 
@@ -70,8 +56,6 @@ public class MainHeader extends BaseBlock {
 
     /**
      * the version the the encryption
-     * 
-     * @return
      */
     public byte getEncryptVersion() {
         return encryptVersion;
@@ -87,8 +71,6 @@ public class MainHeader extends BaseBlock {
 
     /**
      * returns whether the archive is encrypted
-     * 
-     * @return
      */
     public boolean isEncrypted() {
         return (this.flags & BaseBlock.MHD_PASSWORD) != 0;
@@ -96,8 +78,6 @@ public class MainHeader extends BaseBlock {
 
     /**
      * return whether the archive is a multivolume archive
-     * 
-     * @return
      */
     public boolean isMultiVolume() {
         return (this.flags & BaseBlock.MHD_VOLUME) != 0;
@@ -106,8 +86,6 @@ public class MainHeader extends BaseBlock {
     /**
      * if the archive is a multivolume archive this method returns whether this
      * instance is the first part of the multivolume archive
-     * 
-     * @return
      */
     public boolean isFirstVolume() {
         return (this.flags & BaseBlock.MHD_FIRSTVOLUME) != 0;
@@ -127,14 +105,12 @@ public class MainHeader extends BaseBlock {
         str.append("\nisLocked: " + isLocked());
         str.append("\nisProtected: " + isProtected());
         str.append("\nisAV: " + isAV());
-        logger.info(str.toString());
+        logger.fine(str.toString());
     }
 
     /**
      * returns whether this archive is solid. in this case you can only extract
      * all file at once
-     * 
-     * @return
      */
     public boolean isSolid() {
         return (this.flags & MHD_SOLID) != 0;
@@ -154,8 +130,6 @@ public class MainHeader extends BaseBlock {
 
     /**
      * the numbering format a multivolume archive
-     * 
-     * @return
      */
     public boolean isNewNumbering() {
         return (this.flags & MHD_NEWNUMBERING) != 0;

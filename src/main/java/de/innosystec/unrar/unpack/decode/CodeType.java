@@ -22,7 +22,7 @@ package de.innosystec.unrar.unpack.decode;
  * you are not allowed to use this source to re-create the RAR compression
  * algorithm
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public enum CodeType {

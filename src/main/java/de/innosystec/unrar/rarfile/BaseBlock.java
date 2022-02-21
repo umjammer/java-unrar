@@ -1,26 +1,13 @@
 /*
  * Copyright (c) 2007 innoSysTec (R) GmbH, Germany. All rights reserved.
- * Original author: Edmund Wagner
- * Creation date: 22.05.2007
- *
- * Source: $HeadURL$
- * Last changed: $LastChangedDate$
- *
  *
  * the unrar licence applies to all junrar source and binary distributions
  * you are not allowed to use this source to re-create the RAR compression algorithm
- *
- * Here some html entities which can be used for escaping javadoc tags:
- * "&":  "&#038;" or "&amp;"
- * "<":  "&#060;" or "&lt;"
- * ">":  "&#062;" or "&gt;"
- * "@":  "&#064;"
  */
 
 package de.innosystec.unrar.rarfile;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
 
 import de.innosystec.unrar.io.Raw;
 
@@ -28,12 +15,12 @@ import de.innosystec.unrar.io.Raw;
 /**
  * Base class of all rar headers
  *
- * @author $LastChangedBy$
- * @version $LastChangedRevision$
+ * @author Edmund Wagner
+ * @version 22.05.2007
  */
 public class BaseBlock {
 
-    Log logger = LogFactory.getLog(BaseBlock.class.getName());
+    Logger logger = Logger.getLogger(BaseBlock.class.getName());
 
     public static final short BaseBlockSize = 7;
 
@@ -207,6 +194,6 @@ public class BaseBlock {
         str.append("\nFlags: " + Integer.toHexString(getFlags()));
         str.append("\nHeaderSize: " + getHeaderSize());
         str.append("\nPosition in file: " + getPositionInFile());
-        logger.info(str.toString());
+        logger.fine(str.toString());
     }
 }

@@ -28,7 +28,7 @@ import de.innosystec.unrar.unpack.Unpack;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public class ModelPPM {

@@ -1,26 +1,13 @@
 /*
  * Copyright (c) 2007 innoSysTec (R) GmbH, Germany. All rights reserved.
- * Original author: Edmund Wagner
- * Creation date: 24.05.2007
- *
- * Source: $HeadURL$
- * Last changed: $LastChangedDate$
- *
  *
  * the unrar licence applies to all junrar source and binary distributions
  * you are not allowed to use this source to re-create the RAR compression algorithm
- *
- * Here some html entities which can be used for escaping javadoc tags:
- * "&":  "&#038;" or "&amp;"
- * "<":  "&#060;" or "&lt;"
- * ">":  "&#062;" or "&gt;"
- * "@":  "&#064;"
  */
 
 package de.innosystec.unrar.rarfile;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
 
 import de.innosystec.unrar.io.Raw;
 
@@ -28,13 +15,12 @@ import de.innosystec.unrar.io.Raw;
 /**
  * the header to recognize a file to be a rar archive
  *
- * @author $LastChangedBy$
- * @version $LastChangedRevision$
+ * @author Edmund Wagner
+ * @version 24.05.2007
  */
 public class MarkHeader extends BaseBlock {
 
-    @SuppressWarnings("hiding")
-    private Log logger = LogFactory.getLog(MarkHeader.class.getName());
+    private Logger logger = Logger.getLogger(MarkHeader.class.getName());
 
     private boolean oldFormat = false;
 
@@ -84,6 +70,6 @@ public class MarkHeader extends BaseBlock {
 
     public void print() {
         super.print();
-        logger.info("valid: " + isValid());
+        logger.fine("valid: " + isValid());
     }
 }

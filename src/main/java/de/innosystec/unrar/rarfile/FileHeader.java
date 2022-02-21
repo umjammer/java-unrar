@@ -1,29 +1,15 @@
 /*
  * Copyright (c) 2007 innoSysTec (R) GmbH, Germany. All rights reserved.
- * Original author: Edmund Wagner
- * Creation date: 22.05.2007
- *
- * Source: $HeadURL$
- * Last changed: $LastChangedDate$
- *
  *
  * the unrar licence applies to all junrar source and binary distributions
  * you are not allowed to use this source to re-create the RAR compression algorithm
- *
- * Here some html entities which can be used for escaping javadoc tags:
- * "&":  "&#038;" or "&amp;"
- * "<":  "&#060;" or "&lt;"
- * ">":  "&#062;" or "&gt;"
- * "@":  "&#064;"
  */
 
 package de.innosystec.unrar.rarfile;
 
 import java.util.Calendar;
 import java.util.Date;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
 
 import de.innosystec.unrar.io.Raw;
 
@@ -31,12 +17,12 @@ import de.innosystec.unrar.io.Raw;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
- * @version $LastChangedRevision$
+ * @author Edmund Wagner
+ * @version 22.05.2007
  */
 public class FileHeader extends BlockHeader {
 
-    private final Log logger = LogFactory.getLog(FileHeader.class.getName());
+    private static final Logger logger = Logger.getLogger(FileHeader.class.getName());
 
     private static final byte SALT_SIZE = 8;
 
@@ -188,9 +174,9 @@ public class FileHeader extends BlockHeader {
                 position++;
             }
         }
+
         mTime = getDateDos(fileTime);
         // TODO rartime -> extended
-
     }
 
     @Override
@@ -218,7 +204,7 @@ public class FileHeader extends BlockHeader {
         str.append("\nhasSalt: " + hasSalt());
         str.append("\nhasEncryptVersions: " + hasEncryptVersion());
         str.append("\nisSubBlock: " + isSubBlock());
-        logger.info(str.toString());
+        logger.fine(str.toString());
     }
 
     private Date getDateDos(int time) {
@@ -355,8 +341,6 @@ public class FileHeader extends BlockHeader {
 
     /**
      * the file will be continued in the next archive part
-     *
-     * @return
      */
     public boolean isSplitAfter() {
         return (this.flags & BlockHeader.LHD_SPLIT_AFTER) != 0;
@@ -364,8 +348,6 @@ public class FileHeader extends BlockHeader {
 
     /**
      * the file is continued in this archive
-     *
-     * @return
      */
     public boolean isSplitBefore() {
         return (this.flags & LHD_SPLIT_BEFORE) != 0;
@@ -373,8 +355,6 @@ public class FileHeader extends BlockHeader {
 
     /**
      * this file is compressed as solid (all files handeled as one)
-     *
-     * @return
      */
     public boolean isSolid() {
         return (this.flags & LHD_SOLID) != 0;
@@ -382,8 +362,6 @@ public class FileHeader extends BlockHeader {
 
     /**
      * the file is encrypted
-     *
-     * @return
      */
     public boolean isEncrypted() {
         return (this.flags & BlockHeader.LHD_PASSWORD) != 0;
@@ -391,8 +369,6 @@ public class FileHeader extends BlockHeader {
 
     /**
      * the filename is also present in unicode
-     *
-     * @return
      */
     public boolean isUnicode() {
         return (flags & LHD_UNICODE) != 0;
@@ -412,8 +388,6 @@ public class FileHeader extends BlockHeader {
 
     /**
      * whether this fileheader represents a directory
-     *
-     * @return
      */
     public boolean isDirectory() {
         return (flags & LHD_WINDOWMASK) == LHD_DIRECTORY;

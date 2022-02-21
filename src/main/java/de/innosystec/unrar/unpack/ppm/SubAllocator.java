@@ -24,7 +24,7 @@ import java.util.Arrays;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public class SubAllocator {

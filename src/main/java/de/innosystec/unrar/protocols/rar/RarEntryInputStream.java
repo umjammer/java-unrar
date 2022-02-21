@@ -26,7 +26,9 @@ public class RarEntryInputStream extends ByteArrayInputStream {
 
     public void close() throws IOException {
         super.close();
-        archive.close();
-        archive = null;
+        if (archive != null) {
+            archive.close();
+            archive = null;
+        }
     }
 }

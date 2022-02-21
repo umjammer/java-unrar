@@ -21,7 +21,7 @@ package de.innosystec.unrar.unpack.decode;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public class DistDecode extends Decode {

@@ -1,19 +1,8 @@
 /*
  * Copyright (c) 2007 innoSysTec (R) GmbH, Germany. All rights reserved.
- * Original author: Edmund Wagner
- * Creation date: 21.06.2007
- *
- * Source: $HeadURL$
- * Last changed: $LastChangedDate$
  *
  * the unrar licence applies to all junrar source and binary distributions
  * you are not allowed to use this source to re-create the RAR compression algorithm
- *
- * Here some html entities which can be used for escaping javadoc tags:
- * "&":  "&#038;" or "&amp;"
- * "<":  "&#060;" or "&lt;"
- * ">":  "&#062;" or "&gt;"
- * "@":  "&#064;"
  */
 
 package de.innosystec.unrar.unpack;
@@ -27,10 +16,10 @@ import de.innosystec.unrar.unpack.vm.BitInput;
 
 
 /**
- * DOCUMENT ME
+ * Unpack15
  *
- * @author $LastChangedBy$
- * @version $LastChangedRevision$
+ * @author Edmund Wagner
+ * @version 21.06.2007
  */
 public abstract class Unpack15 extends BitInput {
 
@@ -236,10 +225,6 @@ public abstract class Unpack15 extends BitInput {
         }
         if (inAddr > BitInput.MAX_SIZE / 2) {
             if (dataSize > 0) {
-                //memmove(InBuf,InBuf+InAddr,DataSize);
-//                for (int i = 0; i < dataSize; i++) {
-//                    inBuf[i] = inBuf[inAddr + i];
-//                }
                 System.arraycopy(inBuf, inAddr, inBuf, 0, dataSize);
             }
             inAddr = 0;
@@ -247,7 +232,6 @@ public abstract class Unpack15 extends BitInput {
         } else {
             dataSize = readTop;
         }
-        //int readCode=UnpIO->UnpRead(InBuf+DataSize,(BitInput::MAX_SIZE-DataSize)&~0xf);
         int readCode = unpIO.unpRead(inBuf, dataSize, (BitInput.MAX_SIZE - dataSize) & ~0xf);
         if (readCode > 0) {
             readTop += readCode;
@@ -567,9 +551,9 @@ public abstract class Unpack15 extends BitInput {
             ChSetC[I] = ((~I + 1) & 0xff) << 8;
         }
 
-        Arrays.fill(NToPl, 0);// memset(NToPl,0,sizeof(NToPl));
-        Arrays.fill(NToPlB, 0); // memset(NToPlB,0,sizeof(NToPlB));
-        Arrays.fill(NToPlC, 0); // memset(NToPlC,0,sizeof(NToPlC));
+        Arrays.fill(NToPl, 0);
+        Arrays.fill(NToPlB, 0);
+        Arrays.fill(NToPlC, 0);
         corrHuff(ChSetB, NToPlB);
     }
 
@@ -577,11 +561,10 @@ public abstract class Unpack15 extends BitInput {
         int I, J, pos = 0;
         for (I = 7; I >= 0; I--) {
             for (J = 0; J < 32; J++, pos++) {
-                CharSet[pos] = ((CharSet[pos] & ~0xff) | I);// *CharSet=(*CharSet
-                // & ~0xff) | I;
+                CharSet[pos] = ((CharSet[pos] & ~0xff) | I);
             }
         }
-        Arrays.fill(NumToPlace, 0);// memset(NumToPlace,0,sizeof(NToPl));
+        Arrays.fill(NumToPlace, 0);
         for (I = 6; I >= 0; I--) {
             NumToPlace[I] = (7 - I) * 32;
         }
@@ -617,5 +600,4 @@ public abstract class Unpack15 extends BitInput {
         }
         wrPtr = unpPtr;
     }
-
 }

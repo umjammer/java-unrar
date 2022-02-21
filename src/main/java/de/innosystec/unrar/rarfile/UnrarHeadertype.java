@@ -22,7 +22,7 @@ package de.innosystec.unrar.rarfile;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public enum UnrarHeadertype {
