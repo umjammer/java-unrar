@@ -117,8 +117,9 @@ public class Archive implements Closeable {
         try {
             readHeaders();
         } catch (Exception e) {
+            // TODO throw exception for rar5 like junrar
             logger.log(Level.WARNING, "exception in archive constructor maybe file is encrypted " + "or currupt", e);
-            // ignore exceptions to allow exraction of working files in
+            // ignore exceptions to allow extraction of working files in
             // corrupt archive
         }
         // Calculate size of packed data
