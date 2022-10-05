@@ -20,8 +20,6 @@ import de.innosystec.unrar.io.Raw;
  */
 public class MarkHeader extends BaseBlock {
 
-    private Logger logger = Logger.getLogger(MarkHeader.class.getName());
-
     private boolean oldFormat = false;
 
     public MarkHeader(BaseBlock bb) {
@@ -68,8 +66,8 @@ public class MarkHeader extends BaseBlock {
         return oldFormat;
     }
 
-    public void print() {
-        super.print();
-        logger.fine("valid: " + isValid());
+    @Override
+    public String toString() {
+        return super.toString() + "\n" + "valid: " + isValid();
     }
 }

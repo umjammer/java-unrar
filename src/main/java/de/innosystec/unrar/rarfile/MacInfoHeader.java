@@ -7,8 +7,6 @@
 
 package de.innosystec.unrar.rarfile;
 
-import java.util.logging.Logger;
-
 import de.innosystec.unrar.io.Raw;
 
 
@@ -19,7 +17,6 @@ import de.innosystec.unrar.io.Raw;
  * @version 26.11.2007
  */
 public class MacInfoHeader extends SubBlockHeader {
-    private static final Logger logger = Logger.getLogger(MacInfoHeader.class.getName());
 
     public static final short MacInfoHeaderSize = 8;
 
@@ -63,10 +60,10 @@ public class MacInfoHeader extends SubBlockHeader {
         this.fileType = fileType;
     }
 
-    public void print() {
-        super.print();
-        logger.fine("filetype: " + fileType);
-        logger.fine("creator :" + fileCreator);
+    @Override
+    public String toString() {
+        return super.toString() + "\n" +
+                ", filetype: " + fileType +
+                ", creator :" + fileCreator;
     }
-
 }

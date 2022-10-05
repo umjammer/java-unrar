@@ -49,7 +49,6 @@ public class FileHeader extends BlockHeader {
     private final byte[] fileNameBytes;
 
     private String fileName;
-
     private String fileNameW;
 
     private byte[] subData;
@@ -57,11 +56,8 @@ public class FileHeader extends BlockHeader {
     private final byte[] salt = new byte[SALT_SIZE];
 
     private Date mTime;
-
     private Date cTime;
-
     private Date aTime;
-
     private Date arcTime;
 
     private long fullPackSize;
@@ -107,9 +103,9 @@ public class FileHeader extends BlockHeader {
         } else {
             highPackSize = 0;
             highUnpackSize = 0;
-            if (unpSize == 0xffffffff) {
+            if (unpSize == 0xffff_ffffL) {
 
-                unpSize = 0xffffffff;
+                unpSize = 0xffff_ffffL;
                 highUnpackSize = Integer.MAX_VALUE;
             }
 
@@ -180,31 +176,29 @@ public class FileHeader extends BlockHeader {
     }
 
     @Override
-    public void print() {
-        super.print();
-        StringBuilder str = new StringBuilder();
-        str.append("unpSize: " + getUnpSize());
-        str.append("\nHostOS: " + hostOS.name());
-        str.append("\nMDate: " + mTime);
-        str.append("\nFileName: " + getFileNameString());
-        str.append("\nunpMethod: " + Integer.toHexString(getUnpMethod()));
-        str.append("\nunpVersion: " + Integer.toHexString(getUnpVersion()));
-        str.append("\nfullpackedsize: " + getFullPackSize());
-        str.append("\nfullunpackedsize: " + getFullUnpackSize());
-        str.append("\nisEncrypted: " + isEncrypted());
-        str.append("\nisfileHeader: " + isFileHeader());
-        str.append("\nisSolid: " + isSolid());
-        str.append("\nisSplitafter: " + isSplitAfter());
-        str.append("\nisSplitBefore:" + isSplitBefore());
-        str.append("\nunpSize: " + getUnpSize());
-        str.append("\ndataSize: " + getDataSize());
-        str.append("\nisUnicode: " + isUnicode());
-        str.append("\nhasVolumeNumber: " + hasVolumeNumber());
-        str.append("\nhasArchiveDataCRC: " + hasArchiveDataCRC());
-        str.append("\nhasSalt: " + hasSalt());
-        str.append("\nhasEncryptVersions: " + hasEncryptVersion());
-        str.append("\nisSubBlock: " + isSubBlock());
-        logger.fine(str.toString());
+    public String toString() {
+        return super.toString() +
+                "unpSize: " + getUnpSize() +
+                "\nHostOS: " + hostOS.name() +
+                "\nMDate: " + mTime +
+                "\nFileName: " + getFileNameString() +
+                "\nunpMethod: " + Integer.toHexString(getUnpMethod()) +
+                "\nunpVersion: " + Integer.toHexString(getUnpVersion()) +
+                "\nfullpackedsize: " + getFullPackSize() +
+                "\nfullunpackedsize: " + getFullUnpackSize() +
+                "\nisEncrypted: " + isEncrypted() +
+                "\nisfileHeader: " + isFileHeader() +
+                "\nisSolid: " + isSolid() +
+                "\nisSplitafter: " + isSplitAfter() +
+                "\nisSplitBefore:" + isSplitBefore() +
+                "\nunpSize: " + getUnpSize() +
+                "\ndataSize: " + getDataSize() +
+                "\nisUnicode: " + isUnicode() +
+                "\nhasVolumeNumber: " + hasVolumeNumber() +
+                "\nhasArchiveDataCRC: " + hasArchiveDataCRC() +
+                "\nhasSalt: " + hasSalt() +
+                "\nhasEncryptVersions: " + hasEncryptVersion() +
+                "\nisSubBlock: " + isSubBlock();
     }
 
     private Date getDateDos(int time) {
@@ -332,11 +326,6 @@ public class FileHeader extends BlockHeader {
 
     public long getFullUnpackSize() {
         return fullUnpackSize;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString();
     }
 
     /**

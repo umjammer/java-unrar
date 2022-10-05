@@ -7,8 +7,6 @@
 
 package de.innosystec.unrar.rarfile;
 
-import java.util.logging.Logger;
-
 import de.innosystec.unrar.io.Raw;
 
 
@@ -19,7 +17,6 @@ import de.innosystec.unrar.io.Raw;
  * @version 21.11.2007
  */
 public class SubBlockHeader extends BlockHeader {
-    private static final Logger logger = Logger.getLogger(SubBlockHeader.class.getName());
 
     public static final short SubBlockHeaderSize = 3;
 
@@ -51,9 +48,10 @@ public class SubBlockHeader extends BlockHeader {
         return SubBlockHeaderType.findSubblockHeaderType(subType);
     }
 
-    public void print() {
-        super.print();
-        logger.fine("subtype: " + getSubType());
-        logger.fine("level: " + level);
+    @Override
+    public String toString() {
+        return super.toString() + "\n" +
+                "subtype: " + getSubType() + "\n" +
+                "level: " + level;
     }
 }

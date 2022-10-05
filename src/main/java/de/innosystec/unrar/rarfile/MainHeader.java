@@ -7,8 +7,6 @@
 
 package de.innosystec.unrar.rarfile;
 
-import java.util.logging.Logger;
-
 import de.innosystec.unrar.io.Raw;
 
 
@@ -20,7 +18,6 @@ import de.innosystec.unrar.io.Raw;
  * @version 22.05.2007
  */
 public class MainHeader extends BaseBlock {
-    private Logger logger = Logger.getLogger(MainHeader.class.getName());
 
     public static final short mainHeaderSizeWithEnc = 7;
 
@@ -47,7 +44,7 @@ public class MainHeader extends BaseBlock {
 
     /**
      * old cmt block is present
-     * 
+     *
      * @return true if has cmt block
      */
     public boolean hasArchCmt() {
@@ -91,21 +88,20 @@ public class MainHeader extends BaseBlock {
         return (this.flags & BaseBlock.MHD_FIRSTVOLUME) != 0;
     }
 
-    public void print() {
-        super.print();
-        StringBuilder str = new StringBuilder();
-        str.append("posav: " + getPosAv());
-        str.append("\nhighposav: " + getHighPosAv());
-        str.append("\nhasencversion: " + hasEncryptVersion() + (hasEncryptVersion() ? getEncryptVersion() : ""));
-        str.append("\nhasarchcmt: " + hasArchCmt());
-        str.append("\nisEncrypted: " + isEncrypted());
-        str.append("\nisMultivolume: " + isMultiVolume());
-        str.append("\nisFirstvolume: " + isFirstVolume());
-        str.append("\nisSolid: " + isSolid());
-        str.append("\nisLocked: " + isLocked());
-        str.append("\nisProtected: " + isProtected());
-        str.append("\nisAV: " + isAV());
-        logger.fine(str.toString());
+    @Override
+    public String toString() {
+        return super.toString() + "\n" +
+                "posav: " + getPosAv() +
+                "\nhighposav: " + getHighPosAv() +
+                "\nhasencversion: " + hasEncryptVersion() + (hasEncryptVersion() ? getEncryptVersion() : "") +
+                "\nhasarchcmt: " + hasArchCmt() +
+                "\nisEncrypted: " + isEncrypted() +
+                "\nisMultivolume: " + isMultiVolume() +
+                "\nisFirstvolume: " + isFirstVolume() +
+                "\nisSolid: " + isSolid() +
+                "\nisLocked: " + isLocked() +
+                "\nisProtected: " + isProtected() +
+                "\nisAV: " + isAV();
     }
 
     /**

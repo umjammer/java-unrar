@@ -7,8 +7,6 @@
 
 package de.innosystec.unrar.rarfile;
 
-import java.util.logging.Logger;
-
 import de.innosystec.unrar.io.Raw;
 
 
@@ -19,7 +17,6 @@ import de.innosystec.unrar.io.Raw;
  * @version 27.11.2007
  */
 public class EAHeader extends SubBlockHeader {
-    private static Logger logger = Logger.getLogger(EAHeader.class.getName());
 
     public static final short EAHeaderSize = 10;
 
@@ -71,11 +68,12 @@ public class EAHeader extends SubBlockHeader {
         return unpVer;
     }
 
-    public void print() {
-        super.print();
-        logger.fine("unpSize: " + unpSize);
-        logger.fine("unpVersion: " + unpVer);
-        logger.fine("method: " + method);
-        logger.fine("EACRC:" + EACRC);
+    @Override
+    public String toString() {
+        return super.toString() + "\n" +
+        ", unpSize: " + unpSize +
+        ", unpVersion: " + unpVer +
+        ", method: " + method +
+        ", EACRC:" + EACRC;
     }
 }

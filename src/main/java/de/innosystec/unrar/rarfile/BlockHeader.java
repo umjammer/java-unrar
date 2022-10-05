@@ -7,8 +7,6 @@
 
 package de.innosystec.unrar.rarfile;
 
-import java.util.logging.Logger;
-
 import de.innosystec.unrar.io.Raw;
 
 
@@ -21,14 +19,11 @@ import de.innosystec.unrar.io.Raw;
 public class BlockHeader extends BaseBlock {
     public static final short blockHeaderSize = 4;
 
-    private static Logger logger = Logger.getLogger(BlockHeader.class.getName());
-
     private int dataSize;
 
     private int packSize;
 
     public BlockHeader() {
-
     }
 
     public BlockHeader(BlockHeader bh) {
@@ -53,9 +48,9 @@ public class BlockHeader extends BaseBlock {
         return packSize;
     }
 
-    public void print() {
-        super.print();
-        String s = "DataSize: " + getDataSize() + " packSize: " + getPackSize();
-        logger.fine(s);
+    @Override
+    public String toString() {
+        return super.toString() + "\n" +
+            "DataSize: " + getDataSize() + " packSize: " + getPackSize();
     }
 }
