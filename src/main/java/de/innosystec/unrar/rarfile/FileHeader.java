@@ -129,16 +129,16 @@ public class FileHeader extends BlockHeader {
         if (isFileHeader()) {
             if (isUnicode()) {
                 int length = 0;
-                fileName = "";
-                fileNameW = "";
-                while (length < fileNameBytes.length && fileNameBytes[length] != 0) {
+                while (length < fileNameBytes.length
+                        && fileNameBytes[length] != 0) {
                     length++;
                 }
-                byte[] name = new byte[length];
-                System.arraycopy(fileNameBytes, 0, name, 0, name.length);
+                fileName = new String(fileNameBytes, 0, length);
                 if (length != nameSize) {
                     length++;
                     fileNameW = FileNameDecoder.decode(fileNameBytes, length);
+                } else {
+                    fileNameW = "";
                 }
             } else {
                 fileName = new String(fileNameBytes);
@@ -252,6 +252,7 @@ public class FileHeader extends BlockHeader {
         return fileNameBytes;
     }
 
+    @Deprecated
     public String getFileNameString() {
         return fileName;
     }
@@ -260,6 +261,7 @@ public class FileHeader extends BlockHeader {
         this.fileName = fileName;
     }
 
+    @Deprecated
     public String getFileNameW() {
         return fileNameW;
     }
@@ -380,5 +382,14 @@ public class FileHeader extends BlockHeader {
      */
     public boolean isDirectory() {
         return (flags & LHD_WINDOWMASK) == LHD_DIRECTORY;
+    }
+
+    /**
+     * The filename either in Unicode or ASCII.
+     *
+     * @return the Unicode filename if it exists, else the ASCII filename
+     */
+    public String getFileName() {
+        return isUnicode() && fileNameW != null && !fileNameW.isEmpty() ? fileNameW : fileName;
     }
 }
