@@ -100,10 +100,10 @@ public class RarVM extends BitInput {
     }
 
     public void setLowEndianValue(Vector<Byte> mem, int offset, int value) {
-        mem.set(offset + 0, Byte.valueOf((byte) (value & 0xff)));
-        mem.set(offset + 1, Byte.valueOf((byte) ((value >>> 8) & 0xff)));
-        mem.set(offset + 2, Byte.valueOf((byte) ((value >>> 16) & 0xff)));
-        mem.set(offset + 3, Byte.valueOf((byte) ((value >>> 24) & 0xff)));
+        mem.set(offset + 0, (byte) (value & 0xff));
+        mem.set(offset + 1, (byte) ((value >>> 8) & 0xff));
+        mem.set(offset + 2, (byte) ((value >>> 16) & 0xff));
+        mem.set(offset + 3, (byte) ((value >>> 24) & 0xff));
     }
 
     private int getOperand(VMPreparedOperand cmdOp) {
@@ -593,7 +593,7 @@ public class RarVM extends BitInput {
             if ((dataFlag & 0x8000) != 0) {
                 long dataSize = (long) ReadData(this) & 0xffFFffFF + 1;
                 for (int i = 0; inAddr < codeSize && i < dataSize; i++) {
-                    prg.getStaticData().add(Byte.valueOf((byte) (fgetbits() >> 8)));
+                    prg.getStaticData().add((byte) (fgetbits() >> 8));
                     faddbits(8);
                 }
             }
@@ -794,7 +794,7 @@ public class RarVM extends BitInput {
     }
 
     private VMStandardFilters IsStandardFilter(byte[] code, int codeSize) {
-        VMStandardFilterSignature stdList[] = {
+        VMStandardFilterSignature[] stdList = {
             new VMStandardFilterSignature(53, 0xad576887, VMStandardFilters.VMSF_E8),
             new VMStandardFilterSignature(57, 0x3cd7e57e, VMStandardFilters.VMSF_E8E9),
             new VMStandardFilterSignature(120, 0x3769893f, VMStandardFilters.VMSF_ITANIUM),
@@ -804,9 +804,9 @@ public class RarVM extends BitInput {
             new VMStandardFilterSignature(40, 0x46b9c560, VMStandardFilters.VMSF_UPCASE)
         };
         int CodeCRC = RarCRC.checkCrc(0xffffffff, code, 0, code.length) ^ 0xffffffff;
-        for (int i = 0; i < stdList.length; i++) {
-            if (stdList[i].getCRC() == CodeCRC && stdList[i].getLength() == code.length) {
-                return (stdList[i].getType());
+        for (VMStandardFilterSignature vmStandardFilterSignature : stdList) {
+            if (vmStandardFilterSignature.getCRC() == CodeCRC && vmStandardFilterSignature.getLength() == code.length) {
+                return (vmStandardFilterSignature.getType());
             }
 
         }
@@ -852,7 +852,7 @@ public class RarVM extends BitInput {
                 break;
             }
             int curPos = 0;
-            final byte Masks[] = {
+            byte[] Masks = {
                 4, 4, 6, 6, 0, 0, 7, 7, 4, 4, 0, 0, 4, 4, 0, 0
             };
             fileOffset >>>= 4;
@@ -958,7 +958,7 @@ public class RarVM extends BitInput {
             for (int curChannel = 0; curChannel < channels; curChannel++) {
                 long prevByte = 0;
                 long prevDelta = 0;
-                long Dif[] = new long[7];
+                long[] Dif = new long[7];
                 int D1 = 0, D2 = 0, D3;
                 int K1 = 0, K2 = 0, K3 = 0;
 

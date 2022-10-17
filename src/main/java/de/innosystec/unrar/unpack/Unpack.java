@@ -687,9 +687,7 @@ public final class Unpack extends Unpack20 {
         makeDecodeTables(table, Compress.NC + Compress.DC, LDD, Compress.LDC);
         makeDecodeTables(table, Compress.NC + Compress.DC + Compress.LDC, RD, Compress.RC);
 
-        for (int i = 0; i < unpOldTable.length; i++) {
-            unpOldTable[i] = table[i];
-        }
+        System.arraycopy(table, 0, unpOldTable, 0, unpOldTable.length);
         return (true);
 
     }
@@ -710,7 +708,7 @@ public final class Unpack extends Unpack20 {
             if (inAddr >= readTop - 1 && !unpReadBuf() && I < Length - 1) {
                 return (false);
             }
-            vmCode.add(Byte.valueOf((byte) (getbits() >> 8)));
+            vmCode.add((byte) (getbits() >> 8));
             addbits(8);
         }
         return addVMCode(FirstByte, vmCode, Length);
@@ -745,7 +743,7 @@ public final class Unpack extends Unpack20 {
             if (Ch == -1) {
                 return false;
             }
-            vmCode.add(Byte.valueOf((byte) Ch));
+            vmCode.add((byte) Ch);
         }
         return addVMCode(FirstByte, vmCode, Length);
     }
@@ -894,7 +892,7 @@ public final class Unpack extends Unpack20 {
                 if (Inp.Overflow(3)) {
                     return (false);
                 }
-                globalData.set(offset + I, Byte.valueOf((byte) (Inp.fgetbits() >>> 8)));
+                globalData.set(offset + I, (byte) (Inp.fgetbits() >>> 8));
                 Inp.faddbits(8);
             }
         }

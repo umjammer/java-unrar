@@ -383,9 +383,7 @@ public abstract class Unpack20 extends Unpack15 {
             makeDecodeTables(Table, Compress.NC20, DD, Compress.DC20);
             makeDecodeTables(Table, Compress.NC20 + Compress.DC20, RD, Compress.RC20);
         }
-        for (int i = 0; i < UnpOldTable20.length; i++) {
-            UnpOldTable20[i] = Table[i];
-        }
+        System.arraycopy(Table, 0, UnpOldTable20, 0, UnpOldTable20.length);
         return (true);
     }
 

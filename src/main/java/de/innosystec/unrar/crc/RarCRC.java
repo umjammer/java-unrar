@@ -16,7 +16,7 @@ package de.innosystec.unrar.crc;
  */
 public abstract class RarCRC {
 
-    private static final int crcTab[];
+    private static final int[] crcTab;
 
     static {
         crcTab = new int[256];

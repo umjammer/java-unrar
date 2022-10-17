@@ -131,7 +131,7 @@ public class SubAllocator {
 
     public int GetAllocatedMemory() {
         return subAllocatorSize;
-    };
+    }
 
     public boolean startSubAllocator(int SASize) {
         int t = SASize << 20;

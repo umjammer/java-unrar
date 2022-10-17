@@ -71,7 +71,7 @@ public class Archive implements Closeable {
 
     /** Archive data CRC. */
     @SuppressWarnings("unused")
-    private long arcDataCRC = 0xffff_ffffL;
+    private final long arcDataCRC = 0xffff_ffffL;
 
     private int currentHeaderIndex;
 

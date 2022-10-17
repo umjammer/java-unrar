@@ -13,6 +13,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownServiceException;
+import java.nio.file.Files;
 import java.util.logging.Logger;
 
 import de.innosystec.unrar.Archive;
@@ -76,7 +77,7 @@ logger.fine("Requested to connect; url is " + url);
             if (entry == null) {
                 contentLength = (int) rarFile.length();
                 contentType = "application/x-rar-compressed";
-                is = new FileInputStream(rarFile);
+                is = Files.newInputStream(rarFile.toPath());
             } else {
                 FileHeader fileHeader = null;
                 while ((fileHeader = rarArchive.nextFileHeader()) != null) {
@@ -98,15 +99,10 @@ logger.fine(fileHeader.getFileNameString() + ", " + entry);
                 }
             }
             connected = true;
-        } catch (URISyntaxException usex) {
+        } catch (URISyntaxException | RarException usex) {
             usex.printStackTrace();
             IOException ioex = new IOException(usex.getMessage());
             ioex.setStackTrace(usex.getStackTrace());
-            throw ioex;
-        } catch (RarException rex) {
-            rex.printStackTrace();
-            IOException ioex = new IOException(rex.getMessage());
-            ioex.setStackTrace(rex.getStackTrace());
             throw ioex;
         }
     }

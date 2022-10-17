@@ -30,22 +30,22 @@ import de.innosystec.unrar.io.Raw;
 public class EndArcHeader extends BaseBlock {
 
     @SuppressWarnings({
-        "hiding", "unused"
+            "unused"
     })
     private static final short EARC_NEXT_VOLUME = 0x0001;
 
     @SuppressWarnings({
-        "hiding", "unused"
+            "unused"
     })
     private static final short EARC_DATACRC = 0x0002;
 
     @SuppressWarnings({
-        "hiding", "unused"
+            "unused"
     })
     private static final short EARC_REVSPACE = 0x0004;
 
     @SuppressWarnings({
-        "hiding", "unused"
+            "unused"
     })
     private static final short EARC_VOLNUMBER = 0x0008;
 

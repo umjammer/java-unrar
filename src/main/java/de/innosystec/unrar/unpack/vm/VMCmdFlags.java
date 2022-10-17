@@ -43,7 +43,7 @@ public class VMCmdFlags {
 
     public static final byte VMCF_CHFLAGS = 64;
 
-    public static byte VM_CmdFlags[] = {
+    public static final byte[] VM_CmdFlags = {
         /* VM_MOV */ VMCF_OP2 | VMCF_BYTEMODE, /* VM_CMP */ VMCF_OP2 | VMCF_BYTEMODE | VMCF_CHFLAGS,
         /* VM_ADD */ VMCF_OP2 | VMCF_BYTEMODE | VMCF_CHFLAGS, /* VM_SUB */ VMCF_OP2 | VMCF_BYTEMODE | VMCF_CHFLAGS,
         /* VM_JZ */ VMCF_OP1 | VMCF_JUMP | VMCF_USEFLAGS, /* VM_JNZ */ VMCF_OP1 | VMCF_JUMP | VMCF_USEFLAGS,

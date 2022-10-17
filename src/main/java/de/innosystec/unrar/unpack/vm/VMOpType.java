@@ -32,7 +32,7 @@ public enum VMOpType {
 
     private int opType;
 
-    private VMOpType(int opType) {
+    VMOpType(int opType) {
         this.opType = opType;
     }
 

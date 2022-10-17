@@ -40,7 +40,7 @@ public enum VMFlags {
 
     private int flag;
 
-    private VMFlags(int flag) {
+    VMFlags(int flag) {
         this.flag = flag;
     }
 
