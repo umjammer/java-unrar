@@ -92,11 +92,11 @@ public class Raw {
      * @return the value
      */
     public static final short readShortLittleEndian(byte[] array, int pos) {
-        short result = 0;
-        result += (short) (array[pos + 1] & 0xff);
+        int result = 0;
+        result += array[pos + 1] & 0xff;
         result <<= 8;
-        result += (short) (array[pos] & 0xff);
-        return result;
+        result += array[pos] & 0xff;
+        return (short) result;
     }
 
     /**
