@@ -237,7 +237,7 @@ public class Raw {
      */
     public static final void incShortLittleEndian(byte[] array, int pos, int dv) {
         int c = ((array[pos] & 0xff) + (dv & 0xff)) >>> 8;
-        array[pos] += dv & 0xff;
+        array[pos] = (byte) (array[pos] + dv & 0xff);
         if ((c > 0) || ((dv & 0xff00) != 0)) {
             array[pos + 1] += ((dv >>> 8) & 0xff) + c;
         }
