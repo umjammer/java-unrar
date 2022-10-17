@@ -58,7 +58,7 @@ public class State extends Pointer {
     }
 
     public void incFreq(int dFreq) {
-        mem[pos + 1] += dFreq;
+        mem[pos + 1] = (byte) (mem[pos + 1] + dFreq);
     }
 
     public int getSuccessor() {
