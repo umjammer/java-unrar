@@ -21,7 +21,7 @@ package de.innosystec.unrar.unpack.vm;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public enum VMStandardFilters {
@@ -36,7 +36,7 @@ public enum VMStandardFilters {
 
     private int filter;
 
-    private VMStandardFilters(int filter) {
+    VMStandardFilters(int filter) {
         this.filter = filter;
     }
 

@@ -32,7 +32,7 @@ public class FileNameDecoder {
         int low = 0;
         int high = 0;
         int highByte = getChar(name, encPos++);
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         while (encPos < name.length) {
             if (flagBits == 0) {
                 flags = getChar(name, encPos++);

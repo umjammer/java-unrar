@@ -25,7 +25,7 @@ import de.innosystec.unrar.io.Raw;
 /**
  * extended version info header
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public class AVHeader extends BaseBlock {

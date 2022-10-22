@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 
 
 /**
@@ -43,8 +44,8 @@ public class AnalyzeHeapDump {
         InputStream jin = null;
         int bufferLen = 256 * 1024;
         try {
-            cin = new BufferedInputStream(new FileInputStream(cfile), bufferLen);
-            jin = new BufferedInputStream(new FileInputStream(jfile), bufferLen);
+            cin = new BufferedInputStream(Files.newInputStream(cfile.toPath()), bufferLen);
+            jin = new BufferedInputStream(Files.newInputStream(jfile.toPath()), bufferLen);
             boolean matching = true;
             boolean mismatchFound = false;
             long startOff = 0L;

@@ -21,7 +21,7 @@ package de.innosystec.unrar.unpack.vm;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public enum VMCommands {
@@ -88,7 +88,7 @@ public enum VMCommands {
 
     private int vmCommand;
 
-    private VMCommands(int vmCommand) {
+    VMCommands(int vmCommand) {
         this.vmCommand = vmCommand;
     }
 

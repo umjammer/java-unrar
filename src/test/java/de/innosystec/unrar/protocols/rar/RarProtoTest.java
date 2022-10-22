@@ -8,16 +8,21 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.junit.jupiter.api.Test;
+
 
 public class RarProtoTest {
 
-    /**
-     * @param args
-     */
-    public static void main(String[] args) throws Exception {
+    static {
+        System.out.println(System.setProperty("java.protocol.handler.pkgs", "de.innosystec.unrar.protocols"));
+    }
+
+    @Test
+    void test1() throws Exception {
         System.out.println(System.getProperty("java.protocol.handler.pkgs"));
-        File rarFile = new File("G:\\aTwin_b1.3_bin.rar");
-        String inFile = "aTwin_b1.3_bin\\License.txt";
+
+        File rarFile = new File("src/test/resources/test.rar");
+        String inFile = "tmp/ja.properties";
         URL url = new URL("rar:" + rarFile.toURI().toURL() + "!/" + inFile);
         System.out.println(url);
         System.out.println("Host: " + url.getHost() + ", proto: " + url.getProtocol() + ", path: " + url.getPath() + ", ref: "

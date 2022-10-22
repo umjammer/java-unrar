@@ -1,19 +1,8 @@
 /*
  * Copyright (c) 2007 innoSysTec (R) GmbH, Germany. All rights reserved.
- * Original author: Edmund Wagner
- * Creation date: 31.05.2007
- *
- * Source: $HeadURL$
- * Last changed: $LastChangedDate$
  *
  * the unrar licence applies to all junrar source and binary distributions
  * you are not allowed to use this source to re-create the RAR compression algorithm
- *
- * Here some html entities which can be used for escaping javadoc tags:
- * "&":  "&#038;" or "&amp;"
- * "<":  "&#060;" or "&lt;"
- * ">":  "&#062;" or "&gt;"
- * "@":  "&#064;"
  */
 
 package de.innosystec.unrar.unpack;
@@ -32,10 +21,10 @@ import de.innosystec.unrar.rarfile.FileHeader;
 
 
 /**
- * DOCUMENT ME
+ * ComprDataIO
  *
- * @author $LastChangedBy$
- * @version $LastChangedRevision$
+ * @author Edmund Wagner
+ * @version 31.05.2007
  */
 public class ComprDataIO {
 
@@ -153,7 +142,6 @@ public class ComprDataIO {
 
     public void unpWrite(byte[] addr, int offset, int count) throws IOException {
         if (!testMode) {
-            // DestFile->Write(Addr,Count);
             outputStream.write(addr, offset, count);
         }
 
@@ -320,19 +308,15 @@ public class ComprDataIO {
         return subHead;
     }
 
-//    public void setEncryption(int method, char[] Password, byte[] Salt,
-//            boolean encrypt, boolean handsOffHash)
-//    {
+//    public void setEncryption(int method, char[] Password, byte[] Salt, boolean encrypt, boolean handsOffHash) {
 //
 //    }
-//
-//    public void setAV15Encryption()
-//    {
+
+//    public void setAV15Encryption() {
 //
 //    }
-//
-//    public void setCmt13Encryption()
-//    {
+
+//    public void setCmt13Encryption() {
 //
 //    }
 }

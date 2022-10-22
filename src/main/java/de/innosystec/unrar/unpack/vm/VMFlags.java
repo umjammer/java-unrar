@@ -21,7 +21,7 @@ package de.innosystec.unrar.unpack.vm;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public enum VMFlags {
@@ -40,7 +40,7 @@ public enum VMFlags {
 
     private int flag;
 
-    private VMFlags(int flag) {
+    VMFlags(int flag) {
         this.flag = flag;
     }
 

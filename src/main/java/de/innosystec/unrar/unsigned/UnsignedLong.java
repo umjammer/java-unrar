@@ -22,7 +22,7 @@ package de.innosystec.unrar.unsigned;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public class UnsignedLong {

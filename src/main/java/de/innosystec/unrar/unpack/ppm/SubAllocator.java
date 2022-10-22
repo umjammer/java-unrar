@@ -24,7 +24,7 @@ import java.util.Arrays;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public class SubAllocator {
@@ -131,7 +131,7 @@ public class SubAllocator {
 
     public int GetAllocatedMemory() {
         return subAllocatorSize;
-    };
+    }
 
     public boolean startSubAllocator(int SASize) {
         int t = SASize << 20;

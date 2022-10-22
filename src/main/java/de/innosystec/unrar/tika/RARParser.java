@@ -22,6 +22,7 @@ import org.apache.tika.extractor.EmbeddedDocumentExtractor;
 import org.apache.tika.extractor.ParsingEmbeddedDocumentExtractor;
 import org.apache.tika.io.TikaInputStream;
 import org.apache.tika.metadata.Metadata;
+import org.apache.tika.metadata.TikaMimeKeys;
 import org.apache.tika.mime.MediaType;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.Parser;
@@ -54,7 +55,7 @@ public class RARParser implements Parser {
             xhtml.startDocument();
             for (FileHeader header : archive.getFileHeaders()) {
                 Metadata entrydata = new Metadata();
-                entrydata.set(Metadata.RESOURCE_NAME_KEY, header.getFileNameString());
+                entrydata.set(TikaMimeKeys.TIKA_MIME_FILE, header.getFileNameString());
                 if (extractor.shouldParseEmbedded(entrydata)) {
                     extractor.parseEmbedded(stream, xhtml, entrydata, true);
                 }
@@ -71,5 +72,4 @@ public class RARParser implements Parser {
                                                                                      TikaException {
         parse(stream, handler, metadata, new ParseContext());
     }
-
 }

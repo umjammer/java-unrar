@@ -1,29 +1,15 @@
 /*
  * Copyright (c) 2007 innoSysTec (R) GmbH, Germany. All rights reserved.
- * Original author: Edmund Wagner
- * Creation date: 22.05.2007
- *
- * Source: $HeadURL$
- * Last changed: $LastChangedDate$
- *
  *
  * the unrar licence applies to all junrar source and binary distributions
  * you are not allowed to use this source to re-create the RAR compression algorithm
- *
- * Here some html entities which can be used for escaping javadoc tags:
- * "&":  "&#038;" or "&amp;"
- * "<":  "&#060;" or "&lt;"
- * ">":  "&#062;" or "&gt;"
- * "@":  "&#064;"
  */
 
 package de.innosystec.unrar.rarfile;
 
 import java.util.Calendar;
 import java.util.Date;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Logger;
 
 import de.innosystec.unrar.io.Raw;
 
@@ -31,12 +17,12 @@ import de.innosystec.unrar.io.Raw;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
- * @version $LastChangedRevision$
+ * @author Edmund Wagner
+ * @version 22.05.2007
  */
 public class FileHeader extends BlockHeader {
 
-    private final Log logger = LogFactory.getLog(FileHeader.class.getName());
+    private static final Logger logger = Logger.getLogger(FileHeader.class.getName());
 
     private static final byte SALT_SIZE = 8;
 
@@ -63,7 +49,6 @@ public class FileHeader extends BlockHeader {
     private final byte[] fileNameBytes;
 
     private String fileName;
-
     private String fileNameW;
 
     private byte[] subData;
@@ -71,11 +56,8 @@ public class FileHeader extends BlockHeader {
     private final byte[] salt = new byte[SALT_SIZE];
 
     private Date mTime;
-
     private Date cTime;
-
     private Date aTime;
-
     private Date arcTime;
 
     private long fullPackSize;
@@ -121,9 +103,9 @@ public class FileHeader extends BlockHeader {
         } else {
             highPackSize = 0;
             highUnpackSize = 0;
-            if (unpSize == 0xffffffff) {
+            if (unpSize == 0xffff_ffffL) {
 
-                unpSize = 0xffffffff;
+                unpSize = 0xffff_ffffL;
                 highUnpackSize = Integer.MAX_VALUE;
             }
 
@@ -147,16 +129,16 @@ public class FileHeader extends BlockHeader {
         if (isFileHeader()) {
             if (isUnicode()) {
                 int length = 0;
-                fileName = "";
-                fileNameW = "";
-                while (length < fileNameBytes.length && fileNameBytes[length] != 0) {
+                while (length < fileNameBytes.length
+                        && fileNameBytes[length] != 0) {
                     length++;
                 }
-                byte[] name = new byte[length];
-                System.arraycopy(fileNameBytes, 0, name, 0, name.length);
+                fileName = new String(fileNameBytes, 0, length);
                 if (length != nameSize) {
                     length++;
                     fileNameW = FileNameDecoder.decode(fileNameBytes, length);
+                } else {
+                    fileNameW = "";
                 }
             } else {
                 fileName = new String(fileNameBytes);
@@ -188,37 +170,35 @@ public class FileHeader extends BlockHeader {
                 position++;
             }
         }
+
         mTime = getDateDos(fileTime);
         // TODO rartime -> extended
-
     }
 
     @Override
-    public void print() {
-        super.print();
-        StringBuilder str = new StringBuilder();
-        str.append("unpSize: " + getUnpSize());
-        str.append("\nHostOS: " + hostOS.name());
-        str.append("\nMDate: " + mTime);
-        str.append("\nFileName: " + getFileNameString());
-        str.append("\nunpMethod: " + Integer.toHexString(getUnpMethod()));
-        str.append("\nunpVersion: " + Integer.toHexString(getUnpVersion()));
-        str.append("\nfullpackedsize: " + getFullPackSize());
-        str.append("\nfullunpackedsize: " + getFullUnpackSize());
-        str.append("\nisEncrypted: " + isEncrypted());
-        str.append("\nisfileHeader: " + isFileHeader());
-        str.append("\nisSolid: " + isSolid());
-        str.append("\nisSplitafter: " + isSplitAfter());
-        str.append("\nisSplitBefore:" + isSplitBefore());
-        str.append("\nunpSize: " + getUnpSize());
-        str.append("\ndataSize: " + getDataSize());
-        str.append("\nisUnicode: " + isUnicode());
-        str.append("\nhasVolumeNumber: " + hasVolumeNumber());
-        str.append("\nhasArchiveDataCRC: " + hasArchiveDataCRC());
-        str.append("\nhasSalt: " + hasSalt());
-        str.append("\nhasEncryptVersions: " + hasEncryptVersion());
-        str.append("\nisSubBlock: " + isSubBlock());
-        logger.info(str.toString());
+    public String toString() {
+        return super.toString() +
+                "unpSize: " + getUnpSize() +
+                "\nHostOS: " + hostOS.name() +
+                "\nMDate: " + mTime +
+                "\nFileName: " + getFileNameString() +
+                "\nunpMethod: " + Integer.toHexString(getUnpMethod()) +
+                "\nunpVersion: " + Integer.toHexString(getUnpVersion()) +
+                "\nfullpackedsize: " + getFullPackSize() +
+                "\nfullunpackedsize: " + getFullUnpackSize() +
+                "\nisEncrypted: " + isEncrypted() +
+                "\nisfileHeader: " + isFileHeader() +
+                "\nisSolid: " + isSolid() +
+                "\nisSplitafter: " + isSplitAfter() +
+                "\nisSplitBefore:" + isSplitBefore() +
+                "\nunpSize: " + getUnpSize() +
+                "\ndataSize: " + getDataSize() +
+                "\nisUnicode: " + isUnicode() +
+                "\nhasVolumeNumber: " + hasVolumeNumber() +
+                "\nhasArchiveDataCRC: " + hasArchiveDataCRC() +
+                "\nhasSalt: " + hasSalt() +
+                "\nhasEncryptVersions: " + hasEncryptVersion() +
+                "\nisSubBlock: " + isSubBlock();
     }
 
     private Date getDateDos(int time) {
@@ -272,6 +252,7 @@ public class FileHeader extends BlockHeader {
         return fileNameBytes;
     }
 
+    @Deprecated
     public String getFileNameString() {
         return fileName;
     }
@@ -280,6 +261,7 @@ public class FileHeader extends BlockHeader {
         this.fileName = fileName;
     }
 
+    @Deprecated
     public String getFileNameW() {
         return fileNameW;
     }
@@ -348,15 +330,8 @@ public class FileHeader extends BlockHeader {
         return fullUnpackSize;
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
-
     /**
      * the file will be continued in the next archive part
-     *
-     * @return
      */
     public boolean isSplitAfter() {
         return (this.flags & BlockHeader.LHD_SPLIT_AFTER) != 0;
@@ -364,8 +339,6 @@ public class FileHeader extends BlockHeader {
 
     /**
      * the file is continued in this archive
-     *
-     * @return
      */
     public boolean isSplitBefore() {
         return (this.flags & LHD_SPLIT_BEFORE) != 0;
@@ -373,8 +346,6 @@ public class FileHeader extends BlockHeader {
 
     /**
      * this file is compressed as solid (all files handeled as one)
-     *
-     * @return
      */
     public boolean isSolid() {
         return (this.flags & LHD_SOLID) != 0;
@@ -382,8 +353,6 @@ public class FileHeader extends BlockHeader {
 
     /**
      * the file is encrypted
-     *
-     * @return
      */
     public boolean isEncrypted() {
         return (this.flags & BlockHeader.LHD_PASSWORD) != 0;
@@ -391,8 +360,6 @@ public class FileHeader extends BlockHeader {
 
     /**
      * the filename is also present in unicode
-     *
-     * @return
      */
     public boolean isUnicode() {
         return (flags & LHD_UNICODE) != 0;
@@ -412,10 +379,17 @@ public class FileHeader extends BlockHeader {
 
     /**
      * whether this fileheader represents a directory
-     *
-     * @return
      */
     public boolean isDirectory() {
         return (flags & LHD_WINDOWMASK) == LHD_DIRECTORY;
+    }
+
+    /**
+     * The filename either in Unicode or ASCII.
+     *
+     * @return the Unicode filename if it exists, else the ASCII filename
+     */
+    public String getFileName() {
+        return isUnicode() && fileNameW != null && !fileNameW.isEmpty() ? fileNameW : fileName;
     }
 }

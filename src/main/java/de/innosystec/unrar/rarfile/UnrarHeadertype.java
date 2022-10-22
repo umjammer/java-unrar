@@ -22,7 +22,7 @@ package de.innosystec.unrar.rarfile;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public enum UnrarHeadertype {
@@ -131,7 +131,7 @@ public enum UnrarHeadertype {
 
     private byte headerByte;
 
-    private UnrarHeadertype(byte headerByte) {
+    UnrarHeadertype(byte headerByte) {
         this.headerByte = headerByte;
     }
 

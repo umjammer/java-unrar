@@ -25,7 +25,7 @@ import de.innosystec.unrar.io.Raw;
 /**
  * Comment header
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public class CommentHeader extends BaseBlock {

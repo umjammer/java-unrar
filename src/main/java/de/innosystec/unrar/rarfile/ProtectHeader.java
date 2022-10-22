@@ -25,7 +25,7 @@ import de.innosystec.unrar.io.Raw;
 /**
  * recovery header
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public class ProtectHeader extends BlockHeader {

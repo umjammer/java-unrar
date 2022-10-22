@@ -21,7 +21,7 @@ package de.innosystec.unrar.unpack.vm;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public enum VMOpType {
@@ -32,7 +32,7 @@ public enum VMOpType {
 
     private int opType;
 
-    private VMOpType(int opType) {
+    VMOpType(int opType) {
         this.opType = opType;
     }
 

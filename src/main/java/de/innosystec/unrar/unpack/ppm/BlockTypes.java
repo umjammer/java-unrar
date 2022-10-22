@@ -21,7 +21,7 @@ package de.innosystec.unrar.unpack.ppm;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public enum BlockTypes {
@@ -30,7 +30,7 @@ public enum BlockTypes {
 
     private int blockType;
 
-    private BlockTypes(int blockType) {
+    BlockTypes(int blockType) {
         this.blockType = blockType;
     }
 

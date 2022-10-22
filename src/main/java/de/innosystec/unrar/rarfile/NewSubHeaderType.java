@@ -25,7 +25,7 @@ import java.util.Arrays;
 /**
  * subheaders new version of the info headers
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public class NewSubHeaderType {

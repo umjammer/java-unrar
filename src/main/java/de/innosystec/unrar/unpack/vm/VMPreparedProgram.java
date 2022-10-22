@@ -26,7 +26,7 @@ import java.util.Vector;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public class VMPreparedProgram {
@@ -40,7 +40,7 @@ public class VMPreparedProgram {
 
     private Vector<Byte> StaticData = new Vector<>(); // static data contained in DB operators
 
-    private int InitR[] = new int[7];
+    private int[] InitR = new int[7];
 
     private int FilteredDataOffset;
 

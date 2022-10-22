@@ -12,10 +12,7 @@ import de.innosystec.unrar.unpack.ComprDataIO;
  *
  * @author alban
  */
-public class Volume {
-
-    private Volume() {
-    }
+public abstract class Volume {
 
     public static boolean mergeArchive(Archive archive, ComprDataIO dataIO) throws IOException {
         FileHeader hd = dataIO.getSubHeader();

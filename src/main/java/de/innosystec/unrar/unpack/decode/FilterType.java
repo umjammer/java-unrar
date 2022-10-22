@@ -21,7 +21,7 @@ package de.innosystec.unrar.unpack.decode;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public enum FilterType {
@@ -34,5 +34,5 @@ public enum FilterType {
     FILTER_RGB,
     FILTER_DELTA,
     FILTER_ITANIUM,
-    FILTER_E8E9V2;
+    FILTER_E8E9V2
 }

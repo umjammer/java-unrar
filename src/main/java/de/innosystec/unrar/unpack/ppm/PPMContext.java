@@ -24,7 +24,7 @@ import de.innosystec.unrar.io.Raw;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public class PPMContext extends Pointer {
@@ -398,7 +398,7 @@ public class PPMContext extends Pointer {
         }
         if (count < (HiCnt = p.getFreq())) {
             coder.getSubRange().setHighCount(HiCnt);
-            model.setPrevSuccess((2 * HiCnt > coder.getSubRange().getScale()) ? 1 : 0);
+            model.setPrevSuccess((2L * HiCnt > coder.getSubRange().getScale()) ? 1 : 0);
             model.incRunLength(model.getPrevSuccess());
             HiCnt += 4;
             model.getFoundState().setAddress(p.getAddress());

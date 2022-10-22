@@ -25,7 +25,7 @@ import de.innosystec.unrar.io.Raw;
 /**
  * sign header
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public class SignHeader extends BaseBlock {

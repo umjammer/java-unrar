@@ -22,7 +22,7 @@ package de.innosystec.unrar.rarfile;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public enum HostSystem {
@@ -57,7 +57,7 @@ public enum HostSystem {
         return null;
     }
 
-    private HostSystem(byte hostByte) {
+    HostSystem(byte hostByte) {
         this.hostByte = hostByte;
     }
 

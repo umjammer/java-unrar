@@ -1,19 +1,8 @@
 /*
  * Copyright (c) 2007 innoSysTec (R) GmbH, Germany. All rights reserved.
- * Original author: Edmund Wagner
- * Creation date: 01.06.2007
- *
- * Source: $HeadURL$
- * Last changed: $LastChangedDate$
  *
  * the unrar licence applies to all junrar source and binary distributions
  * you are not allowed to use this source to re-create the RAR compression algorithm
- *
- * Here some html entities which can be used for escaping javadoc tags:
- * "&":  "&#038;" or "&amp;"
- * "<":  "&#060;" or "&lt;"
- * ">":  "&#062;" or "&gt;"
- * "@":  "&#064;"
  */
 
 package de.innosystec.unrar.unpack;
@@ -22,10 +11,10 @@ import de.innosystec.unrar.unpack.vm.VMPreparedProgram;
 
 
 /**
- * DOCUMENT ME
+ * UnpackFilter
  *
- * @author $LastChangedBy$
- * @version $LastChangedRevision$
+ * @author Edmund Wagner
+ * @version 01.06.2007
  */
 public class UnpackFilter {
 
@@ -90,5 +79,4 @@ public class UnpackFilter {
     public void setPrg(VMPreparedProgram prg) {
         Prg = prg;
     }
-
 }

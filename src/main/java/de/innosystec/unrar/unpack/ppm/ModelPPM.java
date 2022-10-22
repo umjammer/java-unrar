@@ -28,7 +28,7 @@ import de.innosystec.unrar.unpack.Unpack;
 /**
  * DOCUMENT ME
  *
- * @author $LastChangedBy$
+ * @author Edmund Wagner
  * @version $LastChangedRevision$
  */
 public class ModelPPM {
@@ -74,7 +74,7 @@ public class ModelPPM {
 
     private SubAllocator subAlloc = new SubAllocator();
 
-    private static int InitBinEsc[] = {
+    private static int[] InitBinEsc = {
         0x3CDD, 0x1F3F, 0x59BF, 0x48F3, 0x64A1, 0x5ABC, 0x6632, 0x6051
     };
 
@@ -620,7 +620,6 @@ public class ModelPPM {
 //        pos+=State.size;
 //        a.setAddress(pos);
         //--dbg end
-        return;
     }
 
     // Debug
