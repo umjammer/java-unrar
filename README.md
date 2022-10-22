@@ -1,6 +1,6 @@
-[![](https://jitpack.io/v/umjammer/java-unrar.svg)](https://jitpack.io/#umjammer/java-unrar)
+[![Releases](https://jitpack.io/v/umjammer/java-unrar.svg)](https://jitpack.io/#umjammer/java-unrar)
 [![Java CI](https://github.com/umjammer/java-unrar/actions/workflows/maven.yml/badge.svg)](https://github.com/umjammer/java-unrar/actions/workflows/maven.yml)
-[![CodeQL](https://github.com/umjammer/vavi-apps-comicviewer/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/umjammer/vavi-apps-comicviewer/actions/workflows/codeql-analysis.yml)
+[![CodeQL](https://github.com/umjammer/java-unrar/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/umjammer/java-unrar/actions/workflows/codeql-analysis.yml)
 ![Java](https://img.shields.io/badge/Java-8-b07219)
 [![Parent](https://img.shields.io/badge/Parent-vavi--util--archive-pink)](https://github.com/umjammer/vavi-util-archive)
 
@@ -17,4 +17,4 @@ https://jitpack.io/#umjammer/java-unrar
 ## TODO
 
  * https://github.com/junrar/junrar
-   * same origin, perfect tests 
+   * same origin, perfect tests
