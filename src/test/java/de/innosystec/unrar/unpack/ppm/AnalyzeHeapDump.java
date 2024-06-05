@@ -3,10 +3,13 @@ package de.innosystec.unrar.unpack.ppm;
 
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.nio.file.Files;
+
+import static java.lang.System.getLogger;
 
 
 /**
@@ -15,6 +18,8 @@ import java.nio.file.Files;
  * @author alban
  */
 public class AnalyzeHeapDump {
+
+    private static final Logger logger = getLogger(AnalyzeHeapDump.class.getName());
 
     /** Creates a new instance of AnalyzeHeapDump */
     public AnalyzeHeapDump() {
@@ -34,9 +39,9 @@ public class AnalyzeHeapDump {
         long clen = cfile.length();
         long jlen = jfile.length();
         if (clen != jlen) {
-            System.out.println("File size mismatch");
-            System.out.println("clen = " + clen);
-            System.out.println("jlen = " + jlen);
+            logger.log(Level.TRACE, "File size mismatch");
+            logger.log(Level.TRACE, "clen = " + clen);
+            logger.log(Level.TRACE, "jlen = " + jlen);
         }
         // Do byte comparison
         long len = Math.min(clen, jlen);
@@ -69,23 +74,22 @@ public class AnalyzeHeapDump {
                 printMismatch(startOff, off);
             }
             if (!mismatchFound) {
-                System.out.println("Files are identical");
+                logger.log(Level.TRACE, "Files are identical");
             }
-            System.out.println("Done");
+            logger.log(Level.TRACE, "Done");
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage(), e);
         } finally {
             try {
                 cin.close();
                 jin.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.log(Level.ERROR, e.getMessage(), e);
             }
         }
     }
 
     private static void printMismatch(long startOff, long bytesRead) {
-        System.out
-                .println("Mismatch: off=" + startOff + "(0x" + Long.toHexString(startOff) + "), len=" + (bytesRead - startOff));
+        logger.log(Level.INFO, "Mismatch: off=" + startOff + "(0x" + Long.toHexString(startOff) + "), len=" + (bytesRead - startOff));
     }
 }

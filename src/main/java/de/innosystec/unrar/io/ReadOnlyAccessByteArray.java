@@ -22,7 +22,7 @@ public class ReadOnlyAccessByteArray implements IReadOnlyAccess {
 
     private int positionInFile;
 
-    private byte[] file;
+    private final byte[] file;
 
     /**
      * Initialize with byte[ ]

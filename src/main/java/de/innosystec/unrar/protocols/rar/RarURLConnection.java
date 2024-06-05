@@ -3,22 +3,24 @@ package de.innosystec.unrar.protocols.rar;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownServiceException;
 import java.nio.file.Files;
-import java.util.logging.Logger;
 
 import de.innosystec.unrar.Archive;
 import de.innosystec.unrar.exception.RarException;
 import de.innosystec.unrar.rarfile.FileHeader;
+
+import static java.lang.System.getLogger;
 
 
 /**
@@ -26,7 +28,7 @@ import de.innosystec.unrar.rarfile.FileHeader;
  */
 public class RarURLConnection extends URLConnection {
 
-    private static final Logger logger = Logger.getLogger(RarURLConnection.class.getName());
+    private static final Logger logger = getLogger(RarURLConnection.class.getName());
 
     /**
      * Will contain file data after a successful connection.
@@ -57,7 +59,7 @@ public class RarURLConnection extends URLConnection {
 
     @Override
     public void connect() throws IOException {
-logger.fine("Requested to connect; url is " + url);
+logger.log(Level.DEBUG, "Requested to connect; url is " + url);
 
         try {
             File rarFile;
@@ -82,8 +84,8 @@ logger.fine("Requested to connect; url is " + url);
                 FileHeader fileHeader = null;
                 while ((fileHeader = rarArchive.nextFileHeader()) != null) {
                     if (!fileHeader.isDirectory()) {
-logger.fine(fileHeader.getFileNameString() + ", " + entry);
-                        if (fileHeader.getFileNameString().replace('\\', '/').compareTo(entry) == 0) {
+logger.log(Level.DEBUG, fileHeader.getFileName() + ", " + entry);
+                        if (fileHeader.getFileName().replace('\\', '/').compareTo(entry) == 0) {
                             ByteArrayOutputStream baos = new ByteArrayOutputStream();
                             rarArchive.extractFile(fileHeader, baos);
                             baos.flush();
@@ -100,13 +102,14 @@ logger.fine(fileHeader.getFileNameString() + ", " + entry);
             }
             connected = true;
         } catch (URISyntaxException | RarException usex) {
-            usex.printStackTrace();
+            logger.log(Level.ERROR, usex.getMessage(), usex);
             IOException ioex = new IOException(usex.getMessage());
             ioex.setStackTrace(usex.getStackTrace());
             throw ioex;
         }
     }
 
+    @Override
     public InputStream getInputStream() throws IOException {
         if (!connected) {
             connect();
@@ -117,15 +120,18 @@ logger.fine(fileHeader.getFileNameString() + ", " + entry);
         return is;
     }
 
+    @Override
     public int getContentLength() {
         return contentLength;
     }
 
+    @Override
     public String getContentType() {
         return contentType;
     }
 
     /* Methods with no meaning. */
+    @Override
     public OutputStream getOutputStream() throws UnknownServiceException {
         throw new UnknownServiceException();
     }

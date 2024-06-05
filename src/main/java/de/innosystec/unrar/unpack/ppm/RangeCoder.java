@@ -100,18 +100,17 @@ public class RangeCoder {
 
     // Debug
     public String toString() {
-        StringBuilder buffer = new StringBuilder();
-        buffer.append("RangeCoder[");
-        buffer.append("\n  low=");
-        buffer.append(low);
-        buffer.append("\n  code=");
-        buffer.append(code);
-        buffer.append("\n  range=");
-        buffer.append(range);
-        buffer.append("\n  subrange=");
-        buffer.append(subRange);
-        buffer.append("]");
-        return buffer.toString();
+        String buffer = "RangeCoder[" +
+                "\n  low=" +
+                low +
+                "\n  code=" +
+                code +
+                "\n  range=" +
+                range +
+                "\n  subrange=" +
+                subRange +
+                "]";
+        return buffer;
     }
 
     public static class SubRange {
@@ -148,16 +147,15 @@ public class RangeCoder {
 
         // Debug
         public String toString() {
-            StringBuilder buffer = new StringBuilder();
-            buffer.append("SubRange[");
-            buffer.append("\n  lowCount=");
-            buffer.append(lowCount);
-            buffer.append("\n  highCount=");
-            buffer.append(highCount);
-            buffer.append("\n  scale=");
-            buffer.append(scale);
-            buffer.append("]");
-            return buffer.toString();
+            String buffer = "SubRange[" +
+                    "\n  lowCount=" +
+                    lowCount +
+                    "\n  highCount=" +
+                    highCount +
+                    "\n  scale=" +
+                    scale +
+                    "]";
+            return buffer;
         }
     }
 }

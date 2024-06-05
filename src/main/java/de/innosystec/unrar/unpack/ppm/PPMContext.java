@@ -439,22 +439,21 @@ public class PPMContext extends Pointer {
     }
 
     public String toString() {
-        StringBuilder buffer = new StringBuilder();
-        buffer.append("PPMContext[");
-        buffer.append("\n  pos=");
-        buffer.append(pos);
-        buffer.append("\n  size=");
-        buffer.append(size);
-        buffer.append("\n  numStats=");
-        buffer.append(getNumStats());
-        buffer.append("\n  Suffix=");
-        buffer.append(getSuffix());
-        buffer.append("\n  freqData=");
-        buffer.append(freqData);
-        buffer.append("\n  oneState=");
-        buffer.append(oneState);
-        buffer.append("\n]");
-        return buffer.toString();
+        String buffer = "PPMContext[" +
+                "\n  pos=" +
+                pos +
+                "\n  size=" +
+                size +
+                "\n  numStats=" +
+                getNumStats() +
+                "\n  Suffix=" +
+                getSuffix() +
+                "\n  freqData=" +
+                freqData +
+                "\n  oneState=" +
+                oneState +
+                "\n]";
+        return buffer;
     }
 
 }

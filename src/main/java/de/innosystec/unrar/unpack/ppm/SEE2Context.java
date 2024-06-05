@@ -87,17 +87,16 @@ public class SEE2Context {
     }
 
     public String toString() {
-        StringBuilder buffer = new StringBuilder();
-        buffer.append("SEE2Context[");
-        buffer.append("\n  size=");
-        buffer.append(size);
-        buffer.append("\n  summ=");
-        buffer.append(summ);
-        buffer.append("\n  shift=");
-        buffer.append(shift);
-        buffer.append("\n  count=");
-        buffer.append(count);
-        buffer.append("\n]");
-        return buffer.toString();
+        String buffer = "SEE2Context[" +
+                "\n  size=" +
+                size +
+                "\n  summ=" +
+                summ +
+                "\n  shift=" +
+                shift +
+                "\n  count=" +
+                count +
+                "\n]";
+        return buffer;
     }
 }

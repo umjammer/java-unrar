@@ -37,9 +37,9 @@ public class ProtectHeader extends BlockHeader {
 
     private byte version;
 
-    private short recSectors;
+    private final short recSectors;
 
-    private int totalBlocks;
+    private final int totalBlocks;
 
     private byte mark;
 

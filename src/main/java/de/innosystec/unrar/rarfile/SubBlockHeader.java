@@ -20,7 +20,7 @@ public class SubBlockHeader extends BlockHeader {
 
     public static final short SubBlockHeaderSize = 3;
 
-    private short subType;
+    private final short subType;
 
     private byte level;
 

@@ -35,25 +35,25 @@ public final class Unpack extends Unpack20 {
 
     private int ppmEscChar;
 
-    private RarVM rarVM = new RarVM();
+    private final RarVM rarVM = new RarVM();
 
     /** Filters code, one entry per filter */
-    private List<UnpackFilter> filters = new ArrayList<>();
+    private final List<UnpackFilter> filters = new ArrayList<>();
 
     /** Filters stack, several entrances of same filter are possible */
-    private List<UnpackFilter> prgStack = new ArrayList<>();
+    private final List<UnpackFilter> prgStack = new ArrayList<>();
 
     /**
      * lengths of preceding blocks, one length per filter. Used to reduce size
      * required to write block length if lengths are repeating
      */
-    private List<Integer> oldFilterLengths = new ArrayList<>();
+    private final List<Integer> oldFilterLengths = new ArrayList<>();
 
     private int lastFilter;
 
     private boolean tablesRead;
 
-    private byte[] unpOldTable = new byte[Compress.HUFF_TABLE_SIZE];
+    private final byte[] unpOldTable = new byte[Compress.HUFF_TABLE_SIZE];
 
     private BlockTypes unpBlockType;
 
@@ -70,7 +70,7 @@ public final class Unpack extends Unpack20 {
 
     private int lowDistRepCount;
 
-    public static int[] DBitLengthCounts = {
+    public static final int[] DBitLengthCounts = {
         4, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 14, 0, 12
     };
 
@@ -169,7 +169,7 @@ public final class Unpack extends Unpack20 {
                     break;
                 }
             }
-//System.out.println(((wrPtr - unpPtr) & Compress.MAXWINMASK) + ":" + wrPtr + ":" + unpPtr);
+//logger.log(Level.TRACE, ((wrPtr - unpPtr) & Compress.MAXWINMASK) + ":" + wrPtr + ":" + unpPtr);
             if (((wrPtr - unpPtr) & Compress.MAXWINMASK) < 260 && wrPtr != unpPtr) {
 
                 UnpWriteBuf();
@@ -525,10 +525,10 @@ public final class Unpack extends Unpack20 {
     }
 
     private void copyString(int length, int distance) {
-//System.out.println("copyString(" + length + ", " + distance + ")");
+//logger.log(Level.TRACE, "copyString(" + length + ", " + distance + ")");
 
         int destPtr = unpPtr - distance;
-// System.out.println(unpPtr+":"+distance);
+// logger.log(Level.TRACE, unpPtr+":"+distance);
         if (destPtr >= 0 && destPtr < Compress.MAXWINSIZE - 260 && unpPtr < Compress.MAXWINSIZE - 260) {
 
             window[unpPtr++] = window[destPtr++];
@@ -578,18 +578,18 @@ public final class Unpack extends Unpack20 {
     }
 
     private boolean readEndOfBlock() throws IOException, RarException {
-        int BitField = getbits();
-        boolean NewTable, NewFile = false;
-        if ((BitField & 0x8000) != 0) {
-            NewTable = true;
+        int bitField = getbits();
+        boolean newTable, newFile = false;
+        if ((bitField & 0x8000) != 0) {
+            newTable = true;
             addbits(1);
         } else {
-            NewFile = true;
-            NewTable = (BitField & 0x4000) != 0 ? true : false;
+            newFile = true;
+            newTable = (bitField & 0x4000) != 0;
             addbits(2);
         }
-        tablesRead = !NewTable;
-        return !(NewFile || NewTable && !readTables());
+        tablesRead = !newTable;
+        return !(newFile || newTable && !readTables());
     }
 
     private boolean readTables() throws IOException, RarException {
@@ -602,7 +602,7 @@ public final class Unpack extends Unpack20 {
             }
         }
         faddbits((8 - inBit) & 7);
-        long bitField = fgetbits() & 0xffFFffFF;
+        long bitField = fgetbits() & 0xffff_ffff;
         if ((bitField & 0x8000) != 0) {
             unpBlockType = BlockTypes.BLOCK_PPM;
             return (ppm.decodeInit(this, ppmEscChar));
@@ -639,41 +639,41 @@ public final class Unpack extends Unpack20 {
 
         makeDecodeTables(bitLength, 0, BD, Compress.BC);
 
-        int TableSize = Compress.HUFF_TABLE_SIZE;
+        int tableSize = Compress.HUFF_TABLE_SIZE;
 
-        for (int i = 0; i < TableSize;) {
+        for (int i = 0; i < tableSize;) {
             if (inAddr > readTop - 5) {
                 if (!unpReadBuf()) {
                     return (false);
                 }
             }
-            int Number = decodeNumber(BD);
-            if (Number < 16) {
-                table[i] = (byte) ((Number + unpOldTable[i]) & 0xf);
+            int number = decodeNumber(BD);
+            if (number < 16) {
+                table[i] = (byte) ((number + unpOldTable[i]) & 0xf);
                 i++;
-            } else if (Number < 18) {
-                int N;
-                if (Number == 16) {
-                    N = (fgetbits() >>> 13) + 3;
+            } else if (number < 18) {
+                int n;
+                if (number == 16) {
+                    n = (fgetbits() >>> 13) + 3;
                     faddbits(3);
                 } else {
-                    N = (fgetbits() >>> 9) + 11;
+                    n = (fgetbits() >>> 9) + 11;
                     faddbits(7);
                 }
-                while (N-- > 0 && i < TableSize) {
+                while (n-- > 0 && i < tableSize) {
                     table[i] = table[i - 1];
                     i++;
                 }
             } else {
-                int N;
-                if (Number == 18) {
-                    N = (fgetbits() >>> 13) + 3;
+                int n;
+                if (number == 18) {
+                    n = (fgetbits() >>> 13) + 3;
                     faddbits(3);
                 } else {
-                    N = (fgetbits() >>> 9) + 11;
+                    n = (fgetbits() >>> 9) + 11;
                     faddbits(7);
                 }
-                while (N-- > 0 && i < TableSize) {
+                while (n-- > 0 && i < tableSize) {
                     table[i++] = 0;
                 }
             }
@@ -900,7 +900,7 @@ public final class Unpack extends Unpack20 {
     }
 
     private void ExecuteCode(VMPreparedProgram Prg) {
-        if (Prg.getGlobalData().size() > 0) {
+        if (!Prg.getGlobalData().isEmpty()) {
             Prg.getInitR()[6] = (int) (writtenFileSize);
             rarVM.setLowEndianValue(Prg.getGlobalData(), 0x24, (int) writtenFileSize);
             rarVM.setLowEndianValue(Prg.getGlobalData(), 0x28, (int) (writtenFileSize >>> 32));

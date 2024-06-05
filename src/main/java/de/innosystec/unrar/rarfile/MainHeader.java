@@ -23,9 +23,9 @@ public class MainHeader extends BaseBlock {
 
     public static final short mainHeaderSize = 6;
 
-    private short highPosAv;
+    private final short highPosAv;
 
-    private int posAv;
+    private final int posAv;
 
     private byte encryptVersion;
 

@@ -34,7 +34,7 @@ public class BitInput {
 
     protected int inBit;
 
-    protected byte[] inBuf;
+    protected final byte[] inBuf;
 
     /**
      *

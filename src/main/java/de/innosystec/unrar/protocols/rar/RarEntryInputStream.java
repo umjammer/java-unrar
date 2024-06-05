@@ -17,18 +17,16 @@ import de.innosystec.unrar.Archive;
  */
 public class RarEntryInputStream extends ByteArrayInputStream {
 
-    Archive archive = null;
+    final Archive archive;
 
     public RarEntryInputStream(Archive archive, byte[] ba) {
         super(ba);
         this.archive = archive;
     }
 
+    @Override
     public void close() throws IOException {
         super.close();
-        if (archive != null) {
-            archive.close();
-            archive = null;
-        }
+        archive.close();
     }
 }

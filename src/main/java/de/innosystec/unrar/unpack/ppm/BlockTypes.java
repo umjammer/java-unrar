@@ -28,7 +28,7 @@ public enum BlockTypes {
     BLOCK_LZ(0),
     BLOCK_PPM(1);
 
-    private int blockType;
+    private final int blockType;
 
     BlockTypes(int blockType) {
         this.blockType = blockType;
