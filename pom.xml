@@ -4,7 +4,7 @@
 
   <groupId>de.innosystec</groupId>
   <artifactId>java-unrar</artifactId>
-  <version>1.7.1</version>
+  <version>1.7.2</version>
 
   <name>Java UnRar</name>
   <url>http://sourceforge.net/projects/java-unrar</url>
