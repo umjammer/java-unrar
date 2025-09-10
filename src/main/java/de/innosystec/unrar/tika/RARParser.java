@@ -37,10 +37,12 @@ public class RARParser implements Parser {
 
     private static final MediaType TYPE = MediaType.application("x-rar-compressed");
 
+    @Override
     public Set<MediaType> getSupportedTypes(ParseContext context) {
         return Collections.singleton(TYPE);
     }
 
+    @Override
     public void parse(InputStream stream, ContentHandler handler, Metadata metadata, ParseContext context) throws SAXException,
                                                                                                            IOException,
                                                                                                            TikaException {
@@ -55,7 +57,7 @@ public class RARParser implements Parser {
             xhtml.startDocument();
             for (FileHeader header : archive.getFileHeaders()) {
                 Metadata entrydata = new Metadata();
-                entrydata.set(TikaMimeKeys.TIKA_MIME_FILE, header.getFileNameString());
+                entrydata.set(TikaMimeKeys.TIKA_MIME_FILE, header.getFileName());
                 if (extractor.shouldParseEmbedded(entrydata)) {
                     extractor.parseEmbedded(stream, xhtml, entrydata, true);
                 }

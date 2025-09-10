@@ -38,7 +38,7 @@ public class RarVM extends BitInput {
 
     private byte[] mem;
 
-    private int[] R = new int[regCount];
+    private final int[] R = new int[regCount];
 
     private int flags;
 
@@ -140,7 +140,7 @@ public class RarVM extends BitInput {
         R[7] = VM_MEMSIZE;
         flags = 0;
 
-        List<VMPreparedCommand> preparedCode = prg.getAltCmd().size() != 0 ? prg.getAltCmd() : prg.getCmd();
+        List<VMPreparedCommand> preparedCode = !prg.getAltCmd().isEmpty() ? prg.getAltCmd() : prg.getCmd();
 
         if (!ExecuteCode(preparedCode, prg.getCmdCount())) {
             preparedCode.get(0).setOpCode(VMCommands.VM_RET);

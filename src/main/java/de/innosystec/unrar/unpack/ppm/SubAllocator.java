@@ -39,9 +39,9 @@ public class SubAllocator {
     private int subAllocatorSize;
 
     // byte Indx2Units[N_INDEXES], Units2Indx[128], GlueCount;
-    private int[] indx2Units = new int[N_INDEXES];
+    private final int[] indx2Units = new int[N_INDEXES];
 
-    private int[] units2Indx = new int[128];
+    private final int[] units2Indx = new int[128];
 
     private int glueCount;
 
@@ -95,7 +95,7 @@ public class SubAllocator {
         return retVal;
     }
 
-    private int U2B(int NU) {
+    private static int U2B(int NU) {
         return /* 8*NU+4*NU */UNIT_SIZE * NU;
     }
 
@@ -204,8 +204,12 @@ public class SubAllocator {
         // Bug fixed
         p.setAddress(s0.getNext());
         while (p.getAddress() != s0.getAddress()) {
-            for (p.remove(), sz = p.getNU(); sz > 128; sz -= 128, p.setAddress(MBPtr(p.getAddress(), 128))) {
+            p.remove();
+            sz = p.getNU();
+            while (sz > 128) {
                 insertNode(p.getAddress(), N_INDEXES - 1);
+                sz -= 128;
+                p.setAddress(MBPtr(p.getAddress(), 128));
             }
             if (indx2Units[i = units2Indx[sz - 1]] != sz) {
                 k = sz - indx2Units[--i];
@@ -282,7 +286,7 @@ public class SubAllocator {
     }
 
     public int shrinkUnits(int oldPtr, int oldNU, int newNU) {
-        // System.out.println("SubAllocator.shrinkUnits(" + OldPtr + ", " +
+        // logger.log(Level.TRACE, "SubAllocator.shrinkUnits(" + OldPtr + ", " +
         // OldNU + ", " + NewNU + ")");
         int i0 = units2Indx[oldNU - 1];
         int i1 = units2Indx[newNU - 1];
@@ -391,7 +395,7 @@ public class SubAllocator {
     // out = new FileOutputStream(file);
     // out.write(heap, heapStart, heapEnd - heapStart);
     // out.flush();
-    // System.out.println("Heap dumped to " + file.getAbsolutePath());
+    // logger.log(Level.TRACE, "Heap dumped to " + file.getAbsolutePath());
     // }
     // catch (IOException e) {
     // e.printStackTrace();
@@ -403,24 +407,23 @@ public class SubAllocator {
 
     // Debug
     public String toString() {
-        StringBuilder buffer = new StringBuilder();
-        buffer.append("SubAllocator[");
-        buffer.append("\n  subAllocatorSize=");
-        buffer.append(subAllocatorSize);
-        buffer.append("\n  glueCount=");
-        buffer.append(glueCount);
-        buffer.append("\n  heapStart=");
-        buffer.append(heapStart);
-        buffer.append("\n  loUnit=");
-        buffer.append(loUnit);
-        buffer.append("\n  hiUnit=");
-        buffer.append(hiUnit);
-        buffer.append("\n  pText=");
-        buffer.append(pText);
-        buffer.append("\n  unitsStart=");
-        buffer.append(unitsStart);
-        buffer.append("\n]");
-        return buffer.toString();
+        String buffer = "SubAllocator[" +
+                "\n  subAllocatorSize=" +
+                subAllocatorSize +
+                "\n  glueCount=" +
+                glueCount +
+                "\n  heapStart=" +
+                heapStart +
+                "\n  loUnit=" +
+                loUnit +
+                "\n  hiUnit=" +
+                hiUnit +
+                "\n  pText=" +
+                pText +
+                "\n  unitsStart=" +
+                unitsStart +
+                "\n]";
+        return buffer;
     }
 
 }

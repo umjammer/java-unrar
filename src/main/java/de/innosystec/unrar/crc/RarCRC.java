@@ -41,7 +41,7 @@ public abstract class RarCRC {
 
             startCrc = (crcTab[(startCrc ^ data[offset + i]) & 0xff] ^ (startCrc >>> 8));
 
-            //System.out.println(Integer.toHexString(startCrc));
+            //logger.log(Level.TRACE, Integer.toHexString(startCrc));
         }
         return (startCrc);
     }

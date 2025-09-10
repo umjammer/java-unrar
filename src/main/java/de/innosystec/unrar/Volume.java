@@ -16,7 +16,7 @@ public abstract class Volume {
 
     public static boolean mergeArchive(Archive archive, ComprDataIO dataIO) throws IOException {
         FileHeader hd = dataIO.getSubHeader();
-        if (hd.getUnpVersion() >= 20 && hd.getFileCRC() != 0xffffffff && dataIO.getPackedCRC() != ~hd.getFileCRC()) {
+        if (hd.getUnpVersion() >= 20 && hd.getFileCRC() != 0xffff_ffff && dataIO.getPackedCRC() != ~hd.getFileCRC()) {
             System.err.println("Data Bad CRC");
         }
 

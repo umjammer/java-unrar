@@ -33,7 +33,7 @@ public enum HostSystem {
     macos((byte) 4),
     beos((byte) 5);
 
-    private byte hostByte;
+    private final byte hostByte;
 
     public static HostSystem findHostSystem(byte hostByte) {
         if (HostSystem.msdos.equals(hostByte)) {
@@ -68,5 +68,6 @@ public enum HostSystem {
     public byte getHostByte() {
         return hostByte;
     }
-    //???? public static final byte max = 6;
+
+//    public static final byte max = 6; // ????
 }

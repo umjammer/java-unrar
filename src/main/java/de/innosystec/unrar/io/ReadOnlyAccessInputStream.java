@@ -20,7 +20,7 @@ import java.io.InputStream;
  */
 public class ReadOnlyAccessInputStream extends InputStream {
 
-    private IReadOnlyAccess file;
+    private final IReadOnlyAccess file;
 
     private long curPos;
 

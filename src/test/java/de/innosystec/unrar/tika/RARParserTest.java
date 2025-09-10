@@ -30,5 +30,3 @@ class RARParserTest {
         parser.parse(is, handler, metadata, new ParseContext());
     }
 }
-
-/* */

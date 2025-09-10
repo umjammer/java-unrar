@@ -42,7 +42,7 @@ public class FileHeader extends BlockHeader {
 
     private short nameSize;
 
-    private int highPackSize;
+    private final int highPackSize;
 
     private int highUnpackSize;
 
@@ -201,7 +201,7 @@ public class FileHeader extends BlockHeader {
                 "\nisSubBlock: " + isSubBlock();
     }
 
-    private Date getDateDos(int time) {
+    private static Date getDateDos(int time) {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, (time >>> 25) + 1980);
         cal.set(Calendar.MONTH, ((time >>> 21) & 0x0f) - 1);

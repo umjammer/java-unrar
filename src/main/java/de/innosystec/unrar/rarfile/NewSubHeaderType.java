@@ -86,7 +86,7 @@ public class NewSubHeaderType {
         'E', 'A', 'B', 'E'
     });
 
-    private byte[] headerTypes;
+    private final byte[] headerTypes;
 
     /**
      * Private constructor

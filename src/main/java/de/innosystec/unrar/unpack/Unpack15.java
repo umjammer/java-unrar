@@ -39,17 +39,25 @@ public abstract class Unpack15 extends BitInput {
 
     protected byte[] window;
 
-    protected int[] oldDist = new int[4];
+    protected final int[] oldDist = new int[4];
 
     protected int unpPtr, wrPtr;
 
     protected int oldDistPtr;
 
-    protected int[] ChSet = new int[256], ChSetA = new int[256], ChSetB = new int[256], ChSetC = new int[256];
+    protected final int[] ChSet = new int[256];
+    protected final int[] ChSetA = new int[256];
+    protected final int[] ChSetB = new int[256];
+    protected final int[] ChSetC = new int[256];
 
-    protected int[] Place = new int[256], PlaceA = new int[256], PlaceB = new int[256], PlaceC = new int[256];
+    protected final int[] Place = new int[256];
+    protected final int[] PlaceA = new int[256];
+    protected final int[] PlaceB = new int[256];
+    protected final int[] PlaceC = new int[256];
 
-    protected int[] NToPl = new int[256], NToPlB = new int[256], NToPlC = new int[256];
+    protected final int[] NToPl = new int[256];
+    protected final int[] NToPlB = new int[256];
+    protected final int[] NToPlC = new int[256];
 
     protected int FlagBuf, AvrPlc, AvrPlcB, AvrLn1, AvrLn2, AvrLn3;
 
@@ -129,19 +137,19 @@ public abstract class Unpack15 extends BitInput {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 0, 0
     };
 
-    static int[] ShortLen1 = {
+    static final int[] ShortLen1 = {
         1, 3, 4, 4, 5, 6, 7, 8, 8, 4, 4, 5, 6, 6, 4, 0
     };
 
-    static int[] ShortXor1 = {
+    static final int[] ShortXor1 = {
         0, 0xa0, 0xd0, 0xe0, 0xf0, 0xf8, 0xfc, 0xfe, 0xff, 0xc0, 0x80, 0x90, 0x98, 0x9c, 0xb0
     };
 
-    static int[] ShortLen2 = {
+    static final int[] ShortLen2 = {
         2, 3, 3, 3, 4, 4, 5, 6, 6, 4, 4, 5, 6, 6, 4, 0
     };
 
-    static int[] ShortXor2 = {
+    static final int[] ShortXor2 = {
         0, 0x40, 0x60, 0xa0, 0xd0, 0xe0, 0xf0, 0xf8, 0xfc, 0xc0, 0x80, 0x90, 0x98, 0x9c, 0xb0
     };
 

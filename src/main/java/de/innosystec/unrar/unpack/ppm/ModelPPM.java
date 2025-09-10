@@ -46,7 +46,7 @@ public class ModelPPM {
 
     public static final int MAX_FREQ = 124;
 
-    private SEE2Context[][] SEE2Cont = new SEE2Context[25][16];
+    private final SEE2Context[][] SEE2Cont = new SEE2Context[25][16];
 
     private SEE2Context dummySEE2Cont;
 
@@ -57,24 +57,24 @@ public class ModelPPM {
 
     private int numMasked, initEsc, orderFall, maxOrder, runLength, initRL;
 
-    private int[] charMask = new int[256];
+    private final int[] charMask = new int[256];
 
-    private int[] NS2Indx = new int[256];
+    private final int[] NS2Indx = new int[256];
 
-    private int[] NS2BSIndx = new int[256];
+    private final int[] NS2BSIndx = new int[256];
 
-    private int[] HB2Flag = new int[256];
+    private final int[] HB2Flag = new int[256];
 
     // byte EscCount, PrevSuccess, HiBitsFlag;
     private int escCount, prevSuccess, hiBitsFlag;
 
-    private int[][] binSumm = new int[128][64]; // binary SEE-contexts
+    private final int[][] binSumm = new int[128][64]; // binary SEE-contexts
 
-    private RangeCoder coder = new RangeCoder();
+    private final RangeCoder coder = new RangeCoder();
 
-    private SubAllocator subAlloc = new SubAllocator();
+    private final SubAllocator subAlloc = new SubAllocator();
 
-    private static int[] InitBinEsc = {
+    private static final int[] InitBinEsc = {
         0x3CDD, 0x1F3F, 0x59BF, 0x48F3, 0x64A1, 0x5ABC, 0x6632, 0x6051
     };
 
@@ -484,7 +484,7 @@ public class ModelPPM {
     }
 
     private void updateModel() {
-        //System.out.println("ModelPPM.updateModel()");
+        //logger.log(Level.TRACE, "ModelPPM.updateModel()");
         // STATE fs = *FoundState, *p = NULL;
         StateRef fs = tempStateRef1;
         fs.setValues(foundState);
@@ -565,7 +565,7 @@ public class ModelPPM {
                 .setAddress(pc.getSuffix())) {
             if ((ns1 = pc.getNumStats()) != 1) {
                 if ((ns1 & 1) == 0) {
-                    //System.out.println(ns1);
+                    //logger.log(Level.TRACE, ns1);
                     pc.getFreqData().setStats(subAlloc.expandUnits(pc.getFreqData().getStats(), ns1 >>> 1));
                     if (pc.getFreqData().getStats() == 0) {
                         updateModelRestart();
@@ -624,32 +624,31 @@ public class ModelPPM {
 
     // Debug
     public String toString() {
-        StringBuilder buffer = new StringBuilder();
-        buffer.append("ModelPPM[");
-        buffer.append("\n  numMasked=");
-        buffer.append(numMasked);
-        buffer.append("\n  initEsc=");
-        buffer.append(initEsc);
-        buffer.append("\n  orderFall=");
-        buffer.append(orderFall);
-        buffer.append("\n  maxOrder=");
-        buffer.append(maxOrder);
-        buffer.append("\n  runLength=");
-        buffer.append(runLength);
-        buffer.append("\n  initRL=");
-        buffer.append(initRL);
-        buffer.append("\n  escCount=");
-        buffer.append(escCount);
-        buffer.append("\n  prevSuccess=");
-        buffer.append(prevSuccess);
-        buffer.append("\n  foundState=");
-        buffer.append(foundState);
-        buffer.append("\n  coder=");
-        buffer.append(coder);
-        buffer.append("\n  subAlloc=");
-        buffer.append(subAlloc);
-        buffer.append("\n]");
-        return buffer.toString();
+        String buffer = "ModelPPM[" +
+                "\n  numMasked=" +
+                numMasked +
+                "\n  initEsc=" +
+                initEsc +
+                "\n  orderFall=" +
+                orderFall +
+                "\n  maxOrder=" +
+                maxOrder +
+                "\n  runLength=" +
+                runLength +
+                "\n  initRL=" +
+                initRL +
+                "\n  escCount=" +
+                escCount +
+                "\n  prevSuccess=" +
+                prevSuccess +
+                "\n  foundState=" +
+                foundState +
+                "\n  coder=" +
+                coder +
+                "\n  subAlloc=" +
+                subAlloc +
+                "\n]";
+        return buffer;
     }
 
     // Debug

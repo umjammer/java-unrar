@@ -12,10 +12,10 @@ import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import de.innosystec.unrar.exception.RarException;
 import de.innosystec.unrar.exception.RarException.RarExceptionType;
@@ -39,6 +39,8 @@ import de.innosystec.unrar.rarfile.UnrarHeadertype;
 import de.innosystec.unrar.unpack.ComprDataIO;
 import de.innosystec.unrar.unpack.Unpack;
 
+import static java.lang.System.getLogger;
+
 
 /**
  * The Main Rar Class; represents a rar Archive
@@ -48,7 +50,7 @@ import de.innosystec.unrar.unpack.Unpack;
  */
 public class Archive implements Closeable {
 
-    private static final Logger logger = Logger.getLogger(Archive.class.getName());
+    private static final Logger logger = getLogger(Archive.class.getName());
 
     private File file;
 
@@ -117,7 +119,7 @@ public class Archive implements Closeable {
             readHeaders();
         } catch (Exception e) {
             // TODO throw exception for rar5 like junrar
-            logger.log(Level.WARNING, "exception in archive constructor maybe file is encrypted " + "or currupt", e);
+            logger.log(Level.WARNING, "exception in archive constructor maybe file is encrypted " + "or corrupt", e);
             // ignore exceptions to allow extraction of working files in
             // corrupt archive
         }
@@ -212,7 +214,7 @@ public class Archive implements Closeable {
                 break;
             }
 
-logger.fine("\n--------reading header--------");
+logger.log(Level.DEBUG, "\n--------reading header--------");
             size = rof.readFully(baseBlockBuffer, BaseBlock.BaseBlockSize);
             if (size == 0) {
                 break;
@@ -229,7 +231,7 @@ logger.fine("\n--------reading header--------");
                     throw new RarException(RarException.RarExceptionType.badRarArchive);
                 }
                 headers.add(markHead);
-logger.fine(markHead.toString());
+logger.log(Level.DEBUG, markHead.toString());
                 break;
 
             case MainHeader:
@@ -244,7 +246,7 @@ logger.fine(markHead.toString());
                 if (newMhd.isEncrypted()) {
                     throw new RarException(RarExceptionType.rarEncryptedException);
                 }
-logger.fine(mainhead.toString());
+logger.log(Level.DEBUG, mainhead.toString());
                 break;
 
             case SignHeader:
@@ -255,7 +257,7 @@ logger.fine(mainhead.toString());
                 signHeaderSize = rof.readFully(signBuff, toRead);
                 SignHeader signHead = new SignHeader(block, signBuff);
                 headers.add(signHead);
-logger.fine("HeaderType: SignHeader");
+logger.log(Level.DEBUG, "HeaderType: SignHeader");
 
                 break;
 
@@ -267,7 +269,7 @@ logger.fine("HeaderType: SignHeader");
                 avHeaderSize = rof.readFully(avBuff, toRead);
                 AVHeader avHead = new AVHeader(block, avBuff);
                 headers.add(avHead);
-logger.fine("headertype: AVHeader");
+logger.log(Level.DEBUG, "headerType: AVHeader");
                 break;
 
             case CommHeader:
@@ -278,7 +280,7 @@ logger.fine("headertype: AVHeader");
                 commHeaderSize = rof.readFully(commBuff, toRead);
                 CommentHeader commHead = new CommentHeader(block, commBuff);
                 headers.add(commHead);
-logger.fine("method: " + commHead.getUnpMethod() + "; 0x" + Integer.toHexString(commHead.getUnpMethod()));
+logger.log(Level.DEBUG, "method: " + commHead.getUnpMethod() + "; 0x" + Integer.toHexString(commHead.getUnpMethod()));
                 newpos = commHead.getPositionInFile() + commHead.getHeaderSize();
                 rof.setPosition(newpos);
 
@@ -299,14 +301,14 @@ logger.fine("method: " + commHead.getUnpMethod() + "; 0x" + Integer.toHexString(
                     byte[] endArchBuff = new byte[toRead];
                     endArcHeaderSize = rof.readFully(endArchBuff, toRead);
                     endArcHead = new EndArcHeader(block, endArchBuff);
-logger.fine("HeaderType: endarch\ndatacrc:" + endArcHead.getArchiveDataCRC());
+logger.log(Level.DEBUG, "HeaderType: endarch\ndatacrc:" + endArcHead.getArchiveDataCRC());
                 } else {
-logger.fine("HeaderType: endarch - no Data");
+logger.log(Level.DEBUG, "HeaderType: endarch - no Data");
                     endArcHead = new EndArcHeader(block, null);
                 }
                 headers.add(endArcHead);
                 this.endHeader = endArcHead;
-logger.fine("\n--------end header--------");
+logger.log(Level.DEBUG, "\n--------end header--------");
                 return;
 
             default:
@@ -324,7 +326,7 @@ logger.fine("\n--------end header--------");
                     int fhsize = rof.readFully(fileHeaderBuffer, toRead);
 
                     FileHeader fh = new FileHeader(blockHead, fileHeaderBuffer);
-logger.finer(fh.toString());
+logger.log(Level.TRACE, fh.toString());
                     headers.add(fh);
                     newpos = fh.getPositionInFile() + fh.getHeaderSize() + fh.getFullPackSize();
                     rof.setPosition(newpos);
@@ -337,7 +339,7 @@ logger.finer(fh.toString());
                     int phsize = rof.readFully(protectHeaderBuffer, toRead);
                     ProtectHeader ph = new ProtectHeader(blockHead, protectHeaderBuffer);
 
-logger.finer("totalblocks"+ph.getTotalBlocks());
+logger.log(Level.TRACE, "totalblocks"+ph.getTotalBlocks());
                     newpos = ph.getPositionInFile() + ph.getHeaderSize();
                     rof.setPosition(newpos);
                     break;
@@ -347,14 +349,14 @@ logger.finer("totalblocks"+ph.getTotalBlocks());
                     @SuppressWarnings("unused")
                     int subheadersize = rof.readFully(subHeadbuffer, SubBlockHeader.SubBlockHeaderSize);
                     SubBlockHeader subHead = new SubBlockHeader(blockHead, subHeadbuffer);
-                    logger.fine(subHead.toString());
+                    logger.log(Level.DEBUG, subHead.toString());
                     switch (subHead.getSubType()) {
                     case MAC_HEAD: {
                         byte[] macHeaderbuffer = new byte[MacInfoHeader.MacInfoHeaderSize];
                         @SuppressWarnings("unused")
                         int macheadersize = rof.readFully(macHeaderbuffer, MacInfoHeader.MacInfoHeaderSize);
                         MacInfoHeader macHeader = new MacInfoHeader(subHead, macHeaderbuffer);
-logger.fine(macHeader.toString());
+logger.log(Level.DEBUG, macHeader.toString());
                         headers.add(macHeader);
 
                         break;
@@ -367,7 +369,7 @@ logger.fine(macHeader.toString());
                         @SuppressWarnings("unused")
                         int eaheadersize = rof.readFully(eaHeaderBuffer, EAHeader.EAHeaderSize);
                         EAHeader eaHeader = new EAHeader(subHead, eaHeaderBuffer);
-logger.fine(eaHeader.toString());
+logger.log(Level.DEBUG, eaHeader.toString());
                         headers.add(eaHeader);
 
                         break;
@@ -385,7 +387,7 @@ logger.fine(eaHeader.toString());
                         @SuppressWarnings("unused")
                         int uoHeaderSize = rof.readFully(uoHeaderBuffer, toRead);
                         UnixOwnersHeader uoHeader = new UnixOwnersHeader(subHead, uoHeaderBuffer);
-logger.fine(uoHeader.toString());
+logger.log(Level.DEBUG, uoHeader.toString());
                         headers.add(uoHeader);
                         break;
                     default:
@@ -395,12 +397,12 @@ logger.fine(uoHeader.toString());
                     break;
                 }
                 default:
-                    logger.warning("Unknown Header");
+                    logger.log(Level.WARNING, "Unknown Header");
                     throw new RarException(RarExceptionType.notRarArchive);
 
                 }
             }
-logger.finer("\n--------end header--------");
+logger.log(Level.TRACE, "\n--------end header--------");
         }
     }
 

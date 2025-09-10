@@ -38,7 +38,7 @@ public class AVHeader extends BaseBlock {
 
     private byte avVersion;
 
-    private int avInfoCRC;
+    private final int avInfoCRC;
 
     public AVHeader(BaseBlock bb, byte[] avHeader) {
         super(bb);

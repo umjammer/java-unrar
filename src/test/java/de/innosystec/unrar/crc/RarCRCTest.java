@@ -21,9 +21,7 @@ class RarCRCTest {
             0x73, 0x00, 0x00, 0x0D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
         };
 
-        int result = RarCRC.checkCrc(0xFFFFffff, data, 0, data.length);
+        int result = RarCRC.checkCrc(0xffff_ffff, data, 0, data.length);
         assertEquals(0x90cf, ~result & 0xffff);
     }
 }
-
-/* */

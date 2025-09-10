@@ -129,7 +129,7 @@ public enum UnrarHeadertype {
         return null;
     }
 
-    private byte headerByte;
+    private final byte headerByte;
 
     UnrarHeadertype(byte headerByte) {
         this.headerByte = headerByte;

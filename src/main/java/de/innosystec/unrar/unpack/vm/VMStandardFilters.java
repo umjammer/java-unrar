@@ -34,7 +34,7 @@ public enum VMStandardFilters {
     VMSF_DELTA(6),
     VMSF_UPCASE(7);
 
-    private int filter;
+    private final int filter;
 
     VMStandardFilters(int filter) {
         this.filter = filter;
